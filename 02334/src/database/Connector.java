@@ -18,15 +18,15 @@ public class Connector {
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database, username, password);
 			statement = connection.createStatement();
-		} finally {
-			Close();
+		} catch (Exception ex) {
+			close();
 		}
 		
 	}
 	
 	// Close
 	
-	public void Close() {
+	public void close() {
 
 		try {
 			connection.close();
@@ -44,20 +44,32 @@ public class Connector {
 	public void reset() throws Exception {
 
 		// Drop
-		
-		statement.executeUpdate("DROP TABLE comments;");
-		statement.executeUpdate("DROP TABLE threads;");
-		statement.executeUpdate("DROP TABLE categories;");
-		statement.executeUpdate("DROP TABLE users;");
-		
+
+		try {
+			statement.executeUpdate("DROP TABLE comments;");
+		} catch (Exception ex) {
+		}
+		try {
+			statement.executeUpdate("DROP TABLE threads;");
+		} catch (Exception ex) {
+		}
+		try {
+			statement.executeUpdate("DROP TABLE categories;");
+		} catch (Exception ex) {
+		}
+		try {
+			statement.executeUpdate("DROP TABLE users;");
+		} catch (Exception ex) {
+		}
+
 		// Create
 		
-		statement.executeUpdate("CREATE TABLE users(id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, type INTEGER NOT NULL, PRIMARY KEY (id));");	
-		statement.executeUpdate("CREATE TABLE categories(id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, parent INTEGER, PRIMARY KEY (id), FOREIGN KEY (parent) REFERENCES categories(id));");
-		statement.executeUpdate("CREATE TABLE threads(id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, category INTEGER NOT NULL, name VARCHAR(100) NOT NULL, sticky BOOLEAN NOT NULL, closed BOOLEAN NOT NULL, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (category) REFERENCES categories(id));");
-		statement.executeUpdate("CREATE TABLE comments(id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, thread INTEGER NOT NULL, content VARCHAR(1000) NOT NULL, created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, changed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (thread) REFERENCES threads(id));");
+		statement.executeUpdate("CREATE TABLE users (id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, type INTEGER NOT NULL, PRIMARY KEY (id));");	
+		statement.executeUpdate("CREATE TABLE categories (id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, parent INTEGER, PRIMARY KEY (id), FOREIGN KEY (parent) REFERENCES categories(id));");
+		statement.executeUpdate("CREATE TABLE threads (id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, category INTEGER NOT NULL, name VARCHAR(100) NOT NULL, sticky BOOLEAN NOT NULL, closed BOOLEAN NOT NULL, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (category) REFERENCES categories(id));");
+		statement.executeUpdate("CREATE TABLE comments (id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, thread INTEGER NOT NULL, content VARCHAR(1000) NOT NULL, created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, changed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (thread) REFERENCES threads(id));");
 		
-		// Insert
+		// Insert		
 		
 		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Administrator', 'a', 1);");
 		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Moderator', 'm', 2);");
