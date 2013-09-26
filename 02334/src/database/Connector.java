@@ -2,11 +2,15 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Connector {
 	
 	// ############################# new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM")
+	
+	/* TODO: Ændre password til hash - Admin/Mod password reset */
 	
 	private Connection connection;
 	private Statement statement;
@@ -20,6 +24,7 @@ public class Connector {
 			statement = connection.createStatement();
 		} catch (Exception ex) {
 			close();
+			throw ex;
 		}
 		
 	}
@@ -29,11 +34,11 @@ public class Connector {
 	public void close() {
 
 		try {
-			connection.close();
+			statement.close();
 		} catch (Exception ex) {
 		}
 		try {
-			statement.close();
+			connection.close();
 		} catch (Exception ex) {
 		}
 		
@@ -64,16 +69,17 @@ public class Connector {
 
 		// Create
 		
-		statement.executeUpdate("CREATE TABLE users (identifier INTEGER NOT NULL AUTO_INCREMENT, " + 
-													"name VARCHAR(20) NOT NULL UNIQUE, " + 
-													"password VARCHAR(20) NOT NULL, " + 
-													"type INTEGER NOT NULL, " + 
+		statement.executeUpdate("CREATE TABLE users (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
+													"name VARCHAR(20) NOT NULL UNIQUE, " +
+													"password VARCHAR(20) NOT NULL, " +
+													"type INTEGER NOT NULL, " +
 													"PRIMARY KEY (identifier));");
 		
 		statement.executeUpdate("CREATE TABLE categories (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
 														 "name VARCHAR(100) NOT NULL, " +
 														 "parent INTEGER, " +
 														 "PRIMARY KEY (identifier), " +
+														 "UNIQUE (name, parent), " +
 														 "FOREIGN KEY (parent) REFERENCES categories(identifier));");
 		
 		statement.executeUpdate("CREATE TABLE threads (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
@@ -98,9 +104,9 @@ public class Connector {
 		
 		// Insert		
 		
-		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Administrator', 'a', 1);");
-		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Moderator', 'm', 2);");
-		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Bruger', 'b', 3);");
+		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Administrator', 'a', 0);");
+		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Moderator', 'm', 1);");
+		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Bruger', 'b', 2);");
 		
 		statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Hovedkategori', NULL);");
 		statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Underkategori', 1);");
@@ -114,6 +120,23 @@ public class Connector {
 		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 2, 'Tekst i anden tråd.');");
 		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 3, 'Tekst i tredje tråd.');");
 		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (5, 4, 'Tekst i fjerde tråd.');");
+		
+	}
+	
+	protected void update(User user) throws Exception {
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("UPDATE users SET name = x, password = x, type = x WHERE identifier = x;");
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getPassword());
+			statement.setInt(3, user.getType().getValue());
+			statement.setInt(4, user.getIdentifier());
+			statement.executeUpdate();
+		} finally {
+			statement.close();
+		}
 		
 	}
 	
