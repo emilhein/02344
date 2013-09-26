@@ -15,7 +15,9 @@ public class Main {
 		
 		//tester her
 		Boundary boundary = new Boundary();
-		System.out.println(boundary.readString());
+		for(int i=0;i<10;i++){
+		System.out.println(Boundary.passHash(boundary.passCheck("hej")));
+		}
 		
 		
 		
