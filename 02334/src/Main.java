@@ -15,8 +15,8 @@ public class Main {
 		
 		//tester her
 		
-		String passOk = Boundary.passCheck("hejsa1222");
-		System.out.println(passOk);
+		Boundary.passCheck("hejsa1222");
+		
 		
 		
 		
