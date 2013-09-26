@@ -64,26 +64,56 @@ public class Connector {
 
 		// Create
 		
-		statement.executeUpdate("CREATE TABLE users (id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, type INTEGER NOT NULL, PRIMARY KEY (id));");	
-		statement.executeUpdate("CREATE TABLE categories (id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(100) NOT NULL, parent INTEGER, PRIMARY KEY (id), FOREIGN KEY (parent) REFERENCES categories(id));");
-		statement.executeUpdate("CREATE TABLE threads (id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, category INTEGER NOT NULL, name VARCHAR(100) NOT NULL, sticky BOOLEAN NOT NULL, closed BOOLEAN NOT NULL, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (category) REFERENCES categories(id));");
-		statement.executeUpdate("CREATE TABLE comments (id INTEGER NOT NULL AUTO_INCREMENT, user INTEGER NOT NULL, thread INTEGER NOT NULL, content VARCHAR(1000) NOT NULL, created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, changed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (id), FOREIGN KEY (user) REFERENCES users(id), FOREIGN KEY (thread) REFERENCES threads(id));");
+		statement.executeUpdate("CREATE TABLE users (identifier INTEGER NOT NULL AUTO_INCREMENT, " + 
+													"name VARCHAR(20) NOT NULL UNIQUE, " + 
+													"password VARCHAR(20) NOT NULL, " + 
+													"type INTEGER NOT NULL, " + 
+													"PRIMARY KEY (identifier));");
+		
+		statement.executeUpdate("CREATE TABLE categories (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
+														 "name VARCHAR(100) NOT NULL, " +
+														 "parent INTEGER, " +
+														 "PRIMARY KEY (identifier), " +
+														 "FOREIGN KEY (parent) REFERENCES categories(identifier));");
+		
+		statement.executeUpdate("CREATE TABLE threads (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
+													  "user INTEGER NOT NULL, " +
+													  "category INTEGER NOT NULL, " + 
+													  "name VARCHAR(100) NOT NULL, " +
+													  "sticky BOOLEAN NOT NULL, " +
+													  "closed BOOLEAN NOT NULL, " +
+													  "created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
+													  "PRIMARY KEY (identifier), " +
+													  "FOREIGN KEY (user) REFERENCES users(identifier), " +
+													  "FOREIGN KEY (category) REFERENCES categories(identifier));");
+		
+		statement.executeUpdate("CREATE TABLE comments (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
+													   "user INTEGER NOT NULL, " +
+													   "thread INTEGER NOT NULL, " +
+													   "content VARCHAR(1000) NOT NULL, " +
+													   "changed TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, " +
+													   "PRIMARY KEY (identifier), " +
+													   "FOREIGN KEY (user) REFERENCES users(identifier), " +
+													   "FOREIGN KEY (thread) REFERENCES threads(identifier));");
 		
 		// Insert		
 		
 		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Administrator', 'a', 1);");
 		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Moderator', 'm', 2);");
 		statement.executeUpdate("INSERT INTO users (name, password, type) VALUES ('Bruger', 'b', 3);");
+		
 		statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Hovedkategori', NULL);");
 		statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Underkategori', 1);");
+		
 		statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet og lukket tråd', TRUE, TRUE);");
 		statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet tråd', TRUE, FALSE);");
 		statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (3, 2, 'Lukket tråd', FALSE, TRUE);");
 		statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (5, 2, 'Normal tråd', FALSE, FALSE);");
+		
 		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 1, 'Tekst i første tråd.');");
 		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 2, 'Tekst i anden tråd.');");
-		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 3, 'Tekst i tredje.');");
-		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (5, 4, 'Tekst i fjerde.');");
+		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 3, 'Tekst i tredje tråd.');");
+		statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (5, 4, 'Tekst i fjerde tråd.');");
 		
 	}
 	
