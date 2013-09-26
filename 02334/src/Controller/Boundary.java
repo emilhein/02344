@@ -1,32 +1,34 @@
 package Controller;
 
-import java.util.Scanner;
+
 
 public class Boundary {
 
-	private Scanner scanner;
+
 
 	// Check på password
-	public String passCheck(String pass) {
-		scanner = new Scanner(System.in);
-		// Read next line.
-		String line = scanner.nextLine();
-
-		// Check the line contains at least one character and is below 200.
-		if (line.length() > 24) {
+	public static String passCheck(String pass) {
+	
+		if (pass.length() > 24) {
 			return "text to long";
-		} else if (line != null && line.length() > 0) {
-			return line;
-		}
 
-		return line;
+		} else if (pass != null && pass.length() > 3) {
+			System.out.println("Før hash er pass: " + pass);
+			int hash = Boundary.passHash(pass);
+			System.out.println("Efter hash er pass blevet til: " + hash);
+			return pass;
+						
+		}else return "password ikke godkendt";
+		
 
 	}
-//hash-creater. Creates hash of the given pass
+
+	// hash-creater. Creates hash of the given pass
 	public static int passHash(String pass) {
 		int hash = 7;
 		for (int i = 0; i < pass.length(); i++) {
 			hash = hash * 31 + pass.hashCode();
+		
 		}
 
 		return hash;

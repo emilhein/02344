@@ -14,10 +14,11 @@ public class Main {
 		}
 		
 		//tester her
-		Boundary boundary = new Boundary();
-		for(int i=0;i<10;i++){
-		System.out.println(Boundary.passHash(boundary.passCheck("hej")));
-		}
+		
+		String passOk = Boundary.passCheck("hejsa1222");
+		
+		
+		
 		
 		
 		
