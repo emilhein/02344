@@ -1,4 +1,5 @@
 import database.Connector;
+import Controller.Boundary;
 
 public class Main {
 
@@ -12,7 +13,11 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("Hej");
+		//tester her
+		Boundary boundary = new Boundary();
+		System.out.println(boundary.readString());
+		
+		
 		
 	}
 
