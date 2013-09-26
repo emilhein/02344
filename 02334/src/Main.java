@@ -1,5 +1,5 @@
+import controller.Boundary;
 import database.Connector;
-import Controller.Boundary;
 
 public class Main {
 
