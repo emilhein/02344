@@ -9,6 +9,29 @@
 	<body>
 		<div id="body">
 		Hej
+		
+		</div>
+		
+		<div id="login">
+			<h2>Login</h2>
+			<form method="post">
+				<input type="hidden" name="login" value="true">
+				<table>
+					<tr>
+						<td>Id:</td>
+						<td><input type="text" name="id" value="<%= request.getParameter("id") != null ? request.getParameter("id") : "" %>"></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><br><input type="submit" value="Sign in"></td>
+					</tr>
+				</table>
+			</form>
+			
 		</div>
 	</body>
 </html>
