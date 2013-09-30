@@ -31,7 +31,9 @@
 					</tr>
 					<tr>
 						<td></td>
-						<td><br><input type="submit" value="Not register ?"></td>
+						<td><br><input type="submit" value="register ?"></td>
+				
+				
 					</tr>
 				<%
 							
