@@ -3,14 +3,11 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Connector {
 	
 	// ############################# new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM")
-	
-	/* TODO: Ændre password til hash - Admin/Mod password reset */
 	
 	private Connection connection;
 	private Statement statement;
@@ -71,7 +68,7 @@ public class Connector {
 		
 		statement.executeUpdate("CREATE TABLE users (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
 													"name VARCHAR(20) NOT NULL UNIQUE, " +
-													"password VARCHAR(20) NOT NULL, " +
+													"password VARBINARY(32) NOT NULL, " +
 													"type INTEGER NOT NULL, " +
 													"PRIMARY KEY (identifier));");
 		
@@ -128,9 +125,9 @@ public class Connector {
 		PreparedStatement statement = null;
 		
 		try {
-			statement = connection.prepareStatement("UPDATE users SET name = x, password = x, type = x WHERE identifier = x;");
+			statement = connection.prepareStatement("UPDATE users SET name = ?, password = ?, type = ? WHERE identifier = ?;");
 			statement.setString(1, user.getName());
-			statement.setString(2, user.getPassword());
+			statement.setBytes(2, user.getPassword());
 			statement.setInt(3, user.getType().getValue());
 			statement.setInt(4, user.getIdentifier());
 			statement.executeUpdate();
