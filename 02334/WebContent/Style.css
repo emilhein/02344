@@ -15,6 +15,11 @@
 	color: #FF2FFF;
 	font-weight: bold;
 }
+p.pos_fixed{
+	position:fixed;
+	top:0px;
+	right:0px;
+	} 
 #Style3 {
 	padding: 0;
 	margin: 0;
