@@ -27,7 +27,7 @@ public class Boundary {
 	public static int passHash(String pass) {
 		int hash = 7;
 		for (int i = 0; i < pass.length(); i++) {
-			hash = hash * 31 + pass.hashCode();
+			hash = hash * 31 + pass.hashCode() * pass.hashCode();
 		
 		}
 
