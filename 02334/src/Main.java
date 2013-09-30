@@ -15,8 +15,8 @@ public class Main {
 		
 		//tester her
 		
-		Boundary.passCheck("hejsa1222");
-		
+		Boundary.passCheck("1222");
+		Boundary.passCheck("1223");
 		
 		
 		
