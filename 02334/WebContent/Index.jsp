@@ -29,9 +29,32 @@
 						<td></td>
 						<td><br><input type="submit" value="Sign in"></td>
 					</tr>
+				
 				</table>
 			</form>
 			
 		</div>
+		<%-- <div id="Opret Bruger">
+			<h2></h2>
+			<form method="post">
+				<input type="hidden" name="Opret Bruger" value="true">
+				<table>
+					<tr>
+						<td>Email:</td>
+						<td><input type="text" name="Email" value="<%= request.getParameter("Email") != null ? request.getParameter("Email") : "" %>"></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><br><input type="submit" value="Opret Bruger"></td>
+					</tr>
+				</table>
+			</form>
+			
+		</div>
+		--%>
 	</body>
 </html>
