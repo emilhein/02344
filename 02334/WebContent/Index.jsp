@@ -29,7 +29,13 @@
 						<td></td>
 						<td><br><input type="submit" value="Sign in"></td>
 					</tr>
-				
+					<tr>
+						<td></td>
+						<td><br><input type="submit" value="Not register ?"></td>
+					</tr>
+				<%
+							
+				%>
 				</table>
 			</form>
 			
