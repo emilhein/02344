@@ -1,11 +1,14 @@
 package database;
 
+import java.security.MessageDigest;
+import java.util.Arrays;
+
 public class User {
 
 	private Connector connector;
 	private int identifier;
 	private String name;
-	private String password;
+	private byte[] password;
 	private Type type;
 	
 	// New
@@ -15,7 +18,7 @@ public class User {
 		this.connector = connector;
 		this.identifier = identifier;
 		this.name = name;
-		this.password = password;
+		this.password = hash(password);
 		this.type = type;
 		
 	}
@@ -30,7 +33,7 @@ public class User {
 		
 		return name;
 	}
-	protected String getPassword() {
+	protected byte[] getPassword() {
 		
 		return password;
 	}
@@ -52,7 +55,7 @@ public class User {
 		
 		// TODO: Validate
 		
-		this.password = password;
+		this.password = hash(password);
 
 		connector.update(this);
 		
@@ -71,7 +74,20 @@ public class User {
 	
 	public boolean checkPassword(String password) {
 		
-		return this.password.compareTo(password) == 0;
+		return Arrays.equals(this.password, hash(password));
+	}
+	
+	private byte[] hash(String password) {
+		
+		try {
+			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+			messageDigest.update(password.getBytes("UTF-8"));
+			return messageDigest.digest();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
 }
