@@ -41,7 +41,7 @@
 				</table>
 			</form>
 			
-		</div>
+		</div> 
 		<%-- <div id="Opret Bruger">
 			<h2></h2>
 			<form method="post">
