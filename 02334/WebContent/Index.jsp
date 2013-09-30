@@ -7,6 +7,8 @@
 		<title>07_2344</title>
 	</head>
 	<body>
+		<div id="body">
 		Hej
+		</div>
 	</body>
 </html>
