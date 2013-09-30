@@ -1,6 +1,5 @@
 import java.util.List;
 
-import controller.Boundary;
 import database.Connector;
 import database.User;
 
