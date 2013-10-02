@@ -116,6 +116,8 @@ public class User {
 	
 	private byte[] hash(String password) {
 		
+		// TODO: Tilføj salt
+		
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 			messageDigest.update(password.getBytes("UTF-8"));
