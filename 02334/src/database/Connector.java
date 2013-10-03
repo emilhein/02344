@@ -168,9 +168,9 @@ public class Connector {
 			
 			// Insert		
 			
-			statement.executeUpdate("INSERT INTO users (mail, name, password, type) VALUES ('administrator@test.com', 'Administrator', 'a', 0);"); // TODO: Ændre password til hash!
-			statement.executeUpdate("INSERT INTO users (mail, name, password, type) VALUES ('moderator@test.com', 'Moderator', 'm', 1);"); // TODO: Ændre password til hash!
-			statement.executeUpdate("INSERT INTO users (mail, name, password, type) VALUES ('bruger@test.com', 'Bruger', 'b', 2);"); // TODO: Ændre password til hash!
+			createUser("administrator@test.com", "Administrator", "a1234567", 0); // TODO: Lav unit tests
+			createUser("moderator@test.com", "Moderator", "m1234567", 1);
+			createUser("bruger@test.com", "Bruger", "b1234567", 2);
 			
 			statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Hovedkategori', NULL);");
 			statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Underkategori', 1);");

@@ -1,5 +1,3 @@
-import java.util.List;
-
 import database.Connector;
 import database.User;
 
