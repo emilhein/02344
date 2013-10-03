@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,8 @@ public class Connector {
 		
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database, username, password);
-		} catch (Exception ex) {
+		} finally {
 			close();
-			throw ex;
 		}
 		
 	}
@@ -35,6 +33,57 @@ public class Connector {
 		try {
 			connection.close();
 		} catch (Exception ex) {
+		}
+		
+	}
+	
+	// Properties
+	
+	public List<User> getUsers() throws Exception {
+		
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM users;");
+			List<User> list = new ArrayList<User>();
+
+			while (resultSet.next()) {
+				list.add(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")));
+			}
+			
+			return list;
+			
+		} finally {
+			resultSet.close();
+			statement.close();
+		}
+		
+	}
+	
+	public User getUser(String mailOrName) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM users WHERE mail = ? OR name = ?;");
+			statement.setString(1, mailOrName);
+			statement.setString(2, mailOrName);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a user where mail or name is '" + mailOrName + "'.");
+			}
+			
+			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
+			
+		} finally {
+			resultSet.close();
+			statement.close();
 		}
 		
 	}
@@ -129,45 +178,39 @@ public class Connector {
 		
 	}
 	
-	public List<User> getUsers() throws Exception {
+	public void createUser(String mail, String name, String password, int type) throws Exception {
+
+		Tools.validateUserMail(mail);
+		Tools.validateUserName(name);
+		Tools.validateUserPassword(password);
+		Tools.validateUserType(type);
 		
-		Statement statement = null;
-		ResultSet resultSet = null;
+		PreparedStatement statement = null;
 		
 		try {
-			
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM users;");
-			List<User> list = new ArrayList<User>();
-
-			while (resultSet.next()) {
-				list.add(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")));
-			}
-			
-			return list;
-			
+			statement = connection.prepareStatement("INSERT INTO users (mail, name, password, type) VALUES (?, ?, ?, ?);");
+			statement.setString(1, mail);
+			statement.setString(2, name);
+			statement.setBytes(3, Tools.hash(password));
+			statement.setInt(4, type);
+			statement.executeUpdate();
 		} finally {
-			resultSet.close();
 			statement.close();
 		}
 		
 	}
 	
-	protected void createUser() {
-		
-	}
-	
-	protected void update(User user) throws Exception {
+	protected void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
 		
 		PreparedStatement statement = null;
 		
 		try {
 			statement = connection.prepareStatement("UPDATE users SET mail = ?, name = ?, password = ?, type = ? WHERE identifier = ?;");
-			statement.setString(1, user.getMail());
-			statement.setString(2, user.getName());
-			statement.setBytes(3, user.getPassword());
-			statement.setInt(4, user.getType());
-			statement.setInt(5, user.getIdentifier());
+			statement.setString(1, mail);
+			statement.setString(2, name);
+			statement.setBytes(3, password);
+			statement.setInt(4, type);
+			statement.setInt(5, identifier);
 			statement.executeUpdate();
 		} finally {
 			statement.close();
