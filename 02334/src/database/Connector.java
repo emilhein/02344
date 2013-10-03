@@ -10,8 +10,6 @@ import java.util.List;
 
 public class Connector {
 	
-	// ############################# new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM")
-	
 	private Connection connection;
 	
 	// New
@@ -69,6 +67,95 @@ public class Connector {
 		}
 		
 	}
+	public List<User> getUsers(int type) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM users WHERE type = ?;");
+			statement.setInt(1, type);
+			resultSet = statement.executeQuery();
+			List<User> list = new ArrayList<User>();
+
+			while (resultSet.next()) {
+				list.add(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")));
+			}
+			
+			return list;
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public List<Category> getCategories() throws Exception {
+		
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM categories;");
+			List<Category> list = new ArrayList<Category>();
+
+			while (resultSet.next()) {
+				list.add(new Category(this, resultSet.getInt("identifier"), resultSet.getString("name"), resultSet.getInt("parent")));
+			}
+			
+			return list;
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public List<Category> getCategories(Category parent) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM categories WHERE parent = ?;");
+			statement.setInt(1, parent == null ? 0 : parent.getIdentifier());
+			resultSet = statement.executeQuery();
+			List<Category> list = new ArrayList<Category>();
+
+			while (resultSet.next()) {
+				list.add(new Category(this, resultSet.getInt("identifier"), resultSet.getString("name"), resultSet.getInt("parent")));
+			}
+			
+			return list;
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	public User getUser(String mailOrName) throws Exception {
 
@@ -87,6 +174,35 @@ public class Connector {
 			}
 			
 			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public Category getCategory(int identifier) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM categories WHERE identifier = ?;");
+			statement.setInt(1, identifier);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a category where identifier is '" + identifier + "'.");
+			}
+			
+			return new Category(this, resultSet.getInt("identifier"), resultSet.getString("name"), resultSet.getInt("parent"));
 			
 		} finally {
 			try {
@@ -141,7 +257,7 @@ public class Connector {
 			
 			statement.executeUpdate("CREATE TABLE categories (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
 															 "name VARCHAR(100) NOT NULL, " +
-															 "parent INTEGER, " +
+															 "parent INTEGER NOT NULL, " +
 															 "PRIMARY KEY (identifier), " +
 															 "UNIQUE (name, parent), " +
 															 "FOREIGN KEY (parent) REFERENCES categories(identifier));");
@@ -166,14 +282,14 @@ public class Connector {
 														   "FOREIGN KEY (user) REFERENCES users(identifier), " +
 														   "FOREIGN KEY (thread) REFERENCES threads(identifier));");
 			
-			// Insert		
+			// Insert
 			
 			createUser("administrator@test.com", "Administrator", "a1234567", 0); // TODO: Lav unit tests
 			createUser("moderator@test.com", "Moderator", "m1234567", 1);
 			createUser("bruger@test.com", "Bruger", "b1234567", 2);
-			
-			statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Hovedkategori', NULL);");
-			statement.executeUpdate("INSERT INTO categories (name, parent) VALUES ('Underkategori', 1);");
+
+			createCategory("Hovedkategori", null); // TODO: Lav unit tests
+			createCategory("Underkategori", getCategory(1));
 			
 			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet og lukket tråd', TRUE, TRUE);");
 			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet tråd', TRUE, FALSE);");
@@ -218,6 +334,25 @@ public class Connector {
 		}
 		
 	}
+	public void createCategory(String name, Category parent) throws Exception {
+
+		Tools.validateCategoryName(name);
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("INSERT INTO categories (name, parent) VALUES (?, ?);");
+			statement.setString(1, name);
+			statement.setInt(2, parent == null ? 0 : parent.getIdentifier());
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	protected void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
 		
@@ -230,6 +365,24 @@ public class Connector {
 			statement.setBytes(3, password);
 			statement.setInt(4, type);
 			statement.setInt(5, identifier);
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	protected void updateCategory(int identifier, String name, int parent) throws Exception {
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("UPDATE categories SET name = ?, parent = ? WHERE identifier = ?;");
+			statement.setString(1, name);
+			statement.setInt(2, parent);
+			statement.setInt(3, identifier);
 			statement.executeUpdate();
 		} finally {
 			try {
