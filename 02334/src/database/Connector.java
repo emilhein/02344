@@ -20,8 +20,9 @@ public class Connector {
 		
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://" + server + ":" + port + "/" + database, username, password);
-		} finally {
+		} catch (Exception ex) {
 			close();
+			throw ex;
 		}
 		
 	}
@@ -57,8 +58,14 @@ public class Connector {
 			return list;
 			
 		} finally {
-			resultSet.close();
-			statement.close();
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 		}
 		
 	}
@@ -82,8 +89,14 @@ public class Connector {
 			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
 			
 		} finally {
-			resultSet.close();
-			statement.close();
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 		}
 		
 	}
@@ -102,19 +115,19 @@ public class Connector {
 
 			try {
 				statement.executeUpdate("DROP TABLE comments;");
-			} catch (Exception e) {
+			} catch (Exception ex) {
 			}
 			try {
 				statement.executeUpdate("DROP TABLE threads;");
-			} catch (Exception e) {
+			} catch (Exception ex) {
 			}
 			try {
 				statement.executeUpdate("DROP TABLE categories;");
-			} catch (Exception e) {
+			} catch (Exception ex) {
 			}
 			try {
 				statement.executeUpdate("DROP TABLE users;");
-			} catch (Exception e) {
+			} catch (Exception ex) {
 			}
 
 			// Create
@@ -173,7 +186,10 @@ public class Connector {
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (5, 4, 'Tekst i fjerde tråd.');");
 			
 		} finally {
-			statement.close();	
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 		}
 		
 	}
@@ -195,7 +211,10 @@ public class Connector {
 			statement.setInt(4, type);
 			statement.executeUpdate();
 		} finally {
-			statement.close();
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 		}
 		
 	}
@@ -213,7 +232,10 @@ public class Connector {
 			statement.setInt(5, identifier);
 			statement.executeUpdate();
 		} finally {
-			statement.close();
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
 		}
 		
 	}
