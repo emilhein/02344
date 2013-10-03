@@ -8,7 +8,7 @@
 		<title>07_2344</title>
 	</head>
 	<body>
-	<div>
+	
 	
 	
 	
@@ -16,11 +16,10 @@
 		Forum
 		</div>
 		
-		<div id="login">
-			<h2>Login</h2>
+		<div id="Login">	
 			<form method="post">
-		<%--	<p class="pos_fixed">--%>
-				<input type="hidden" name="login" value="true">
+			<input type="hidden" name="login" value="true">
+			
 				<table>
 					<tr>
 						<td>Id:</td>
@@ -28,24 +27,19 @@
 					
 						<td>Password:</td>
 						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
-					
-						<td></td>
 						<td><br><input type="submit" value="Sign in"></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><br><input type="submit" value="register ?"></td>
-				
+						<td><input type="submit" value="register ?"></td>
 				
 					</tr>
-				<%--</p>--%>
-				<%
-							
-				%>
+				
 				</table>
+			
 			</form>
 			
-		</div> 
+		</div>
 		<%-- <div id="Opret Bruger">
 			<h2></h2>
 			<form method="post">

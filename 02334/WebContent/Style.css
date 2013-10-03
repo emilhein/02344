@@ -6,25 +6,15 @@
 	font-size: 24px;
 	color: #FF2FFF;
 	font-weight: bold;
+	
 }
 #Login {
-	padding: 0;
-	margin: 0;
+	
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 24px;
-	color: #FF2FFF;
+	font-size: 16px;
+	color: #000000;
 	font-weight: bold;
-}
-p.pos_fixed{
-	position:fixed;
+	position:absolute;
+	right:75px;
 	top:0px;
-	right:0px;
-	} 
-#Style3 {
-	padding: 0;
-	margin: 0;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 24px;
-	color: #FF2FFF;
-	font-weight: bold;
 }
