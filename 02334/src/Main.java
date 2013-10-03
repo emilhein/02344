@@ -18,6 +18,7 @@ public class Main {
 				System.out.println(" " + user.getIdentifier() + "   " + user.getMail() + "   " + user.getName() + "   " + user.getType());
 			}
 			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
