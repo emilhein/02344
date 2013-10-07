@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<<<<<<< HEAD
 <jsp:useBean id="s" class="Web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
+=======
+<%@ page import="database.Connector" %>
+
+
+
+>>>>>>> fd9c0a33236d1531599191582aefdfd997068a75
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -11,8 +18,11 @@
 	<body>
 	
 	
+<<<<<<< HEAD
 	    <h1><%= s.getMessage() %></h1>
 	
+=======
+>>>>>>> fd9c0a33236d1531599191582aefdfd997068a75
 		<div id="body">
 		Forum
 		</div>
@@ -20,7 +30,6 @@
 		<div id="Login">	
 			<form method="post">
 			<input type="hidden" name="login" value="true">
-			
 				<table>
 					<tr>
 						<td>Id:</td>
@@ -32,6 +41,7 @@
 					</tr>
 					<tr>
 						<td></td>
+<<<<<<< HEAD
 						<td><input type="submit" value=" Not registered ?"></td>
 				
 					</tr>
@@ -57,11 +67,31 @@
 					<tr>
 						<td></td>
 						<td><br><input type="submit" value="Opret Bruger"></td>
+=======
+						<td><input type="submit" value="register ?"></td>
+>>>>>>> fd9c0a33236d1531599191582aefdfd997068a75
 					</tr>
 				</table>
 			</form>
-			
 		</div>
-		--%>
-	</body>
+
+
+
+	<div id="Categories">
+		<table>
+			<%
+				for (int i = 0; i < 10; i++) {
+			%>
+			<tr>
+				<td><div id ="table">This is category for subject number:..................................................... <%=i%>			
+				<p></p>
+				</div></td>
+			</tr>
+			<%
+				}
+			%>
+		</table>
+	</div>
+
+		</body>
 </html>

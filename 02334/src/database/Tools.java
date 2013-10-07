@@ -30,14 +30,16 @@ public class Tools {
 	}
 	public static void validateUserName(String name) throws Exception {
 
-		if (!name.matches("^[A-z0-9]+$")) {
+		// MÅ IKKE TILLADE MAIL ADRESSER
+		
+		if (!name.matches("^[A-z0-9]{2,}$")) {
 			throw new IllegalArgumentException("Name is invalid.");
 		}
 		
 	}
 	public static void validateUserPassword(String password) throws Exception {
 
-		if (password.length() < 8) {
+		if (!password.matches("^.{8,}$")) {
 			throw new IllegalArgumentException("Password is too short.");
 		}
 		
@@ -46,6 +48,14 @@ public class Tools {
 
 		if (type != User.ADMINISTRATOR && type != User.MODERATOR && type != User.USER) {
 			throw new IllegalArgumentException("Type is invalid.");
+		}
+		
+	}
+	
+	public static void validateCategoryName(String name) throws Exception {
+
+		if (!name.matches("^.+$")) {
+			throw new IllegalArgumentException("Name is invalid.");
 		}
 		
 	}
