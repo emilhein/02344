@@ -24,7 +24,7 @@ public class Session {
 	}
 	
 	public String getMessage() {
-		return "Hello World!";
+		return "Hej fra Session!";
 	}
 	
 	
