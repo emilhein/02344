@@ -42,6 +42,10 @@ public class User {
 		
 		return name;
 	}
+	protected byte[] getPassword() {
+		
+		return password;
+	}
 	public int getType() {
 		
 		return type;
@@ -84,11 +88,6 @@ public class User {
 		
 		this.type = type;
 		
-	}
-	
-	protected byte[] getPassword() {
-		
-		return password;
 	}
 	
 	// Functions
