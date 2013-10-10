@@ -10,7 +10,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Opret Bruger</title>
 </head>
-
 <body>
 	<a>Udfyld nedenstående information:</a>
 	<div id="Opret Bruger">
@@ -33,7 +32,7 @@
 						value="<%=request.getParameter("Email") != null ? request.getParameter("Email") : ""%>"></td>
 				</tr>
 				<tr>
-					<td>køn:</td>
+					<td>Køn:</td>
 					<td><input type="Køn" name="Køn"
 						value="<%=request.getParameter("Køn") != null ? request.getParameter("Køn") : ""%>"></td>
 				</tr>
@@ -43,10 +42,6 @@
 				</tr>
 			</table>
 		</form>
-
 	</div>
-
-
-
 </body>
 </html>
