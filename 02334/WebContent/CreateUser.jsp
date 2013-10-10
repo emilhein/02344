@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<a href="CreateUser.jsp">Udfyld nedenstående information:</a>
+	<a>Udfyld nedenstående information:</a>
 	<div id="Opret Bruger">
 		<form method="post">
 			<input type="hidden" name="Opret Bruger" value="true">
