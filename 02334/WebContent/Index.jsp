@@ -3,8 +3,6 @@
 <jsp:useBean id="s" class="Web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,19 +34,17 @@
 				<tr>
 					<td>Id:</td>
 					<td><input type="text" name="id"
-						value="<%=request.getParameter("id") != null ? request
-					.getParameter("id") : ""%>"></td>
+						value="<%=request.getParameter("id") != null ? request.getParameter("id") : ""%>"></td>
 
 					<td>Password:</td>
 					<td><input type="password" name="password"
-						value="<%=request.getParameter("password") != null ? request
-					.getParameter("password") : ""%>"></td>
+						value="<%=request.getParameter("password") != null ? request.getParameter("password") : ""%>"></td>
 					<td><br> <input type="submit" value="Sign in"></td>
 				</tr>
 				<tr>
 					<td></td>
 
-					<td><a href="WEB-INF/OpretBruger.jsp">Opret Bruger</a></td>
+					<td><a href="CreateUser.jsp">Opret Bruger</a></td>
 
 				</tr>
 
