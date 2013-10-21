@@ -253,7 +253,8 @@ public class Connector {
 														"name VARCHAR(50) NOT NULL UNIQUE, " +
 														"password VARBINARY(32) NOT NULL, " +
 														"type INTEGER NOT NULL, " +
-														"PRIMARY KEY (identifier));");
+														"PRIMARY KEY (identifier), " +
+													    "UNIQUE (mail, name));");
 			
 			statement.executeUpdate("CREATE TABLE categories (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
 															 "name VARCHAR(100) NOT NULL, " +
