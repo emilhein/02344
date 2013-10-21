@@ -27,15 +27,19 @@
 	}	catch (Exception e) {} 
 	for (Category category : s.getConnector().getCategories(parent)) { 
 	%>
+	<div id="Categories">
 		<table>
-		<tr>
-		<td>Category name:</td>
-		<br><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a><br/>
-		</tr>
-		<tr>
-		<td>Last Thread</td>
-		</tr>
+			<tr>
+				<td><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a>
+				<td />
+			</tr>
+			<tr>
+				<td>Description of the category</td>
+				<td>Number of Threads</td>
+			</tr>
+			
 		</table>
+	</div>
 	<% 
 	}
 	
