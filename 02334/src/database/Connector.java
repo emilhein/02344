@@ -386,8 +386,8 @@ public class Connector {
 
 			createThread(getUser(1), getCategory(1), "Fremhævet og lukket tråd", true, true);
 			createThread(getUser(2), getCategory(1), "Fremhævet tråd", true, false);
-			createThread(getUser(3), getCategory(2), "Lukket tråd", false, true);
-			createThread(getUser(3), getCategory(2), "Normal tråd", false, false);
+			createThread(getUser(3), getCategory(4), "Lukket tråd", false, true);
+			createThread(getUser(3), getCategory(4), "Normal tråd", false, false);
 			
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 1, 'Tekst i første tråd.');");
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (2, 2, 'Tekst i anden tråd.');");
