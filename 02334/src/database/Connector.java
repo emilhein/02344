@@ -373,21 +373,21 @@ public class Connector {
 			
 			// Insert
 			
-			createUser("administrator@test.com", "Administrator", "a1234567", 0); // TODO: Lav unit tests
+			createUser("administrator@test.com", "Administrator", "a1234567", 0);
 			createUser("moderator@test.com", "Moderator", "m1234567", 1);
 			createUser("bruger@test.com", "Bruger", "b1234567", 2);
 
-			createCategory("Hovedkategori 1", null); // TODO: Lav unit tests
-			createCategory("Hovedkategori 2", null);
-			createCategory("Hovedkategori 3", null);
-			createCategory("Underkategori 1", getCategory(1));
-			createCategory("Underkategori 2", getCategory(1));
-			createCategory("Underkategori 3", getCategory(1));
+			createCategory("Hovedkategori", null);
+			createCategory("Tom hovedkategori", null);
+			createCategory("Underkategori", getCategory(1));
+			createCategory("Tom underkategori", getCategory(1));
+			createCategory("Underunderkategori", getCategory(3));
+			createCategory("Tom underunderkategori", getCategory(3));
 
 			createThread(getUser(1), getCategory(1), "Fremhævet og lukket tråd", true, true);
-			createThread(getUser(2), getCategory(1), "Fremhævet tråd", true, false);
-			createThread(getUser(3), getCategory(4), "Lukket tråd", false, true);
-			createThread(getUser(3), getCategory(4), "Normal tråd", false, false);
+			createThread(getUser(2), getCategory(3), "Fremhævet tråd", true, false);
+			createThread(getUser(3), getCategory(5), "Lukket tråd", false, true);
+			createThread(getUser(3), getCategory(5), "Tråd", false, false);
 			
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 1, 'Tekst i første tråd.');");
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (2, 2, 'Tekst i anden tråd.');");

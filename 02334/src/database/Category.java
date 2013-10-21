@@ -1,5 +1,7 @@
 package database;
 
+import java.util.List;
+
 public class Category {
 
 	private Connector connector;
@@ -36,6 +38,14 @@ public class Category {
 			return connector.getCategory(parent);
 		}
 
+	}
+	public List<Category> getCategories() throws Exception {
+		
+		return connector.getCategories(this);
+	}
+	public List<Thread> getThreads() throws Exception {
+		
+		return connector.getThreads(this);
 	}
 	
 	public void setName(String name) throws Exception {
