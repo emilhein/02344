@@ -18,7 +18,7 @@
 	<%
 	for (Category category : s.getConnector().getCategories(null)) { 
 	%>
-		<%=category.getName()%>
+		<br><%=category.getName()%><br/>
 	<% 
 	}
 	%>
