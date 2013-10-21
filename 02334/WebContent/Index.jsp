@@ -14,15 +14,7 @@
 
 
 	<h1><%=s.getMessage()%></h1>
-	
-	
-	<%    Category c = s.getCategories("1");
-			for (Category category : connector.getCategories()) {
-				System.out.println(" " + category.getIdentifier() + "   " + category.getName() + "   " + (category.getParent() == null ? "" : category.getParent().getName()));
-			}
-	%>
-	
-	
+
 			
 	<div id="body">Forum</div>
 

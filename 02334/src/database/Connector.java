@@ -288,8 +288,14 @@ public class Connector {
 			createUser("moderator@test.com", "Moderator", "m1234567", 1);
 			createUser("bruger@test.com", "Bruger", "b1234567", 2);
 
-			createCategory("Hovedkategori", null); // TODO: Lav unit tests
-			createCategory("Underkategori", getCategory(1));
+			createCategory("Hovedkategori1", null); // TODO: Lav unit tests
+			createCategory("Hovedkategori2", null);
+			createCategory("Hovedkategori3", null);
+			createCategory("Hovedkategori4", null);
+			createCategory("Underkategori1", getCategory(1));
+			createCategory("Underkategori2", getCategory(2));
+			createCategory("Underkategori3", getCategory(3));
+			createCategory("Underkategori4", getCategory(4));
 			
 			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet og lukket tråd', TRUE, TRUE);");
 			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet tråd', TRUE, FALSE);");
