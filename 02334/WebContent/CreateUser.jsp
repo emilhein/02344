@@ -36,9 +36,7 @@
 					<td><input type="Køn" name="Køn"
 						value="<%=request.getParameter("Køn") != null ? request.getParameter("Køn") : ""%>"></td>
 				</tr>
-				
 				<tr>
-					<td></td>
 					<td><br> <input type="submit" value="Opret kontoen"></td>
 				</tr>
 			</table>
