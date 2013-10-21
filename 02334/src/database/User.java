@@ -42,10 +42,6 @@ public class User {
 		
 		return name;
 	}
-	protected byte[] getPassword() {
-		
-		return password;
-	}
 	public int getType() {
 		
 		return type;

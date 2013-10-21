@@ -156,7 +156,95 @@ public class Connector {
 		}
 		
 	}
+	public List<Thread> getThreads() throws Exception {
+		
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM threads;");
+			List<Thread> list = new ArrayList<Thread>();
+
+			while (resultSet.next()) {
+				list.add(new Thread(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("category"), resultSet.getString("name"), resultSet.getBoolean("sticky"), resultSet.getBoolean("closed"), resultSet.getTimestamp("created")));
+			}
+			
+			return list;
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public List<Thread> getThreads(Category category) throws Exception {
+		
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM threads WHERE category = ?;");
+			statement.setInt(1, category.getIdentifier());
+			resultSet = statement.executeQuery();
+			List<Thread> list = new ArrayList<Thread>();
+
+			while (resultSet.next()) {
+				list.add(new Thread(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("category"), resultSet.getString("name"), resultSet.getBoolean("sticky"), resultSet.getBoolean("closed"), resultSet.getTimestamp("created")));
+			}
+			
+			return list;
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
+	public User getUser(int identifier) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM users WHERE identifier = ?;");
+			statement.setInt(1, identifier);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a user where identifier is '" + identifier + "'.");
+			}
+			
+			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	public User getUser(String mailOrName) throws Exception {
 
 		PreparedStatement statement = null;
@@ -291,16 +379,16 @@ public class Connector {
 
 			createCategory("Hovedkategori", null); // TODO: Lav unit tests
 			createCategory("Underkategori", getCategory(1));
-			
-			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet og lukket tråd', TRUE, TRUE);");
-			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (1, 2, 'Fremhævet tråd', TRUE, FALSE);");
-			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (3, 2, 'Lukket tråd', FALSE, TRUE);");
-			statement.executeUpdate("INSERT INTO threads (user, category, name, sticky, closed) VALUES (5, 2, 'Normal tråd', FALSE, FALSE);");
+
+			createThread(getUser(1), getCategory(1), "Fremhævet og lukket tråd", true, true);
+			createThread(getUser(2), getCategory(1), "Fremhævet tråd", true, false);
+			createThread(getUser(3), getCategory(2), "Lukket tråd", false, true);
+			createThread(getUser(3), getCategory(2), "Normal tråd", false, false);
 			
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 1, 'Tekst i første tråd.');");
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 2, 'Tekst i anden tråd.');");
+			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (2, 2, 'Tekst i anden tråd.');");
 			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 3, 'Tekst i tredje tråd.');");
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (5, 4, 'Tekst i fjerde tråd.');");
+			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 4, 'Tekst i fjerde tråd.');");
 			
 		} finally {
 			try {
@@ -354,6 +442,28 @@ public class Connector {
 		}
 		
 	}
+	public void createThread(User user, Category category, String name, boolean sticky, boolean closed) throws Exception {
+
+		Tools.validateThreadName(name);
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("INSERT INTO threads (user, category, name, sticky, closed) VALUES (?, ?, ?, ?, ?);");
+			statement.setInt(1, user.getIdentifier());
+			statement.setInt(2, category.getIdentifier());
+			statement.setString(3, name);
+			statement.setBoolean(4, sticky);
+			statement.setBoolean(5, closed);
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	protected void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
 		
@@ -384,6 +494,26 @@ public class Connector {
 			statement.setString(1, name);
 			statement.setInt(2, parent);
 			statement.setInt(3, identifier);
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	protected void updateThread(int identifier, int category, String name, boolean sticky, boolean closed) throws Exception {
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("UPDATE threads SET category = ?, name = ?, sticky = ?, closed = ? WHERE identifier = ?;");
+			statement.setInt(1, category);
+			statement.setString(2, name);
+			statement.setBoolean(3, sticky);
+			statement.setBoolean(4, closed);
+			statement.setInt(5, identifier);
 			statement.executeUpdate();
 		} finally {
 			try {

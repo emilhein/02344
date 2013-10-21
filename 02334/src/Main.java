@@ -27,6 +27,12 @@ public class Main {
 				System.out.println(" " + category.getIdentifier() + ": " + category.getName() + ", " + (category.getParent() == null ? "(ingen)" : category.getParent().getName()));
 			}
 			
+			System.out.println();
+			System.out.println("Threads (Identifier, User, Category, Name, Sticky, Closed):");
+			System.out.println();
+			for (database.Thread thread : connector.getThreads()) {
+				System.out.println(" " + thread.getIdentifier() + ": " + thread.getUser().getName() + ", " + thread.getCategory().getName() + ", " + thread.getName() + ", " + thread.getSticky() + ", " + thread.getClosed());
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
