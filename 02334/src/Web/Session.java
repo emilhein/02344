@@ -28,7 +28,6 @@ public class Session {
 		Connector connector = null;
 		try {
 			connector = new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM");
-			connector.reset();
 			
 		} catch (Exception e) {
 			

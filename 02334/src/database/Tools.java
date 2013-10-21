@@ -23,7 +23,7 @@ public class Tools {
 	
 	public static void validateUserMail(String mail) throws Exception {
 
-		if (!mail.matches("^[A-z0-9]+@[A-z0-9]+\\.[A-z0-9]+$")) {
+		if (!mail.matches("^[A-z0-9]+@[A-z0-9]+\\.[A-z0-9]+$") || !mail.matches("^.{5,50}$")) {
 			throw new IllegalArgumentException("Mail is invalid.");
 		}
 		
@@ -32,7 +32,7 @@ public class Tools {
 
 		// MÅ IKKE TILLADE MAIL ADRESSER
 		
-		if (!name.matches("^[A-z0-9]{2,}$")) {
+		if (!name.matches("^[A-z0-9]{2,50}$")) {
 			throw new IllegalArgumentException("Name is invalid.");
 		}
 		
@@ -54,10 +54,18 @@ public class Tools {
 	
 	public static void validateCategoryName(String name) throws Exception {
 
-		if (!name.matches("^.+$")) {
+		if (!name.matches("^.{2,100}$")) {
 			throw new IllegalArgumentException("Name is invalid.");
 		}
 		
 	}
+
+	public static void validateThreadName(String name) throws Exception {
+
+		if (!name.matches("^.{2,100}$")) {
+			throw new IllegalArgumentException("Name is invalid.");
+		}
 		
+	}
+	
 }
