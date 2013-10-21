@@ -15,10 +15,20 @@
 
 	<h1><%=s.getMessage()%></h1>
 	<h1>Category name</h1>
-	<%
-	for (Category category : s.getConnector().getCategories(null)) { 
+	<%Category parent = null;%>
+	<%try{
+	parent=s.getConnector().getCategory(Integer.parseInt(request.getParameter("Category"))); }
+	catch (Exception e) {
 	%>
-		<br><%=category.getName()%><br/>
+	<h3>The category doesn't exist.	You have been redirected to the frontpage
+	</h3>
+	<%
+	} 
+	%>
+	<%
+	for (Category category : s.getConnector().getCategories(parent)) { 
+	%>
+		<br><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a><br/>
 	<% 
 	}
 	%>
