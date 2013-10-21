@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@ page import="database.Connector" %>
+<%@ page import="database.Connector, database.Category, database.User" %>
 <jsp:useBean id="s" class="Web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
@@ -14,9 +14,17 @@
 
 
 	<h1><%=s.getMessage()%></h1>
-
-			
-	<div id="body">Forum</div>
+	<h1>Category name</h1>
+	<%
+	for (Category category : s.getConnector().getCategories(null)) { 
+	%>
+		<%=category.getName()%>
+	<% 
+	}
+	%>
+	
+				
+	
 
 	<div id="Login">
 		<form method="post">
