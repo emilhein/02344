@@ -42,8 +42,6 @@
 					<td><br> <input type="submit" value="Sign in"></td>
 				</tr>
 				<tr>
-					<td></td>
-
 					<td><a href="CreateUser.jsp">Opret Bruger</a></td>
 
 				</tr>
