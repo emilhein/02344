@@ -71,7 +71,7 @@
 				</tr>
 				<tr>
 					<td><a href="CreateUser.jsp">Opret Bruger</a></td>
-
+					<td><a href="Admin.jsp">Admin panel</a></td>
 				</tr>
 
 			</table>
