@@ -13,7 +13,7 @@
 <body>
 
 
-	<h1><%=s.getMessage()%></h1>
+	
 	<div id="mainDesign"><h1>Welcome</h1></div>
 	<%Category parent = null;
 	try{
