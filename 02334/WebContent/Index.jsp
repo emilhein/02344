@@ -68,7 +68,14 @@
 					<td><input type="password" name="password"
 						value="<%=request.getParameter("password") != null ? request.getParameter("password") : ""%>"></td>
 					<td><br> <input type="submit" value="Sign in"></td>
-				</tr>
+						<%// Login
+		String message = null;
+		if (request.getParameter("login") != null) {
+			message = s.login(request.getParameter("id"),
+					request.getParameter("password"));
+		}
+		%>
+		</tr>
 				<tr>
 					<td><a href="CreateUser.jsp">Opret Bruger</a></td>
 
