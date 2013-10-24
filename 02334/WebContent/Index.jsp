@@ -60,7 +60,7 @@
 
 			<table>
 				<tr>
-					<td>Id:</td>
+					<td>Email:</td>
 					<td><input type="text" name="id"
 						value="<%=request.getParameter("id") != null ? request.getParameter("id") : ""%>"></td>
 

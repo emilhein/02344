@@ -30,7 +30,7 @@
 					<td><input type="text" name="mail" value="<%= request.getParameter("mail") != null ? request.getParameter("mail") : "" %>"></td>
 				</tr>
 				<tr>
-					<td>Name:</td>
+					<td>Brugernavn:</td>
 					<td><input type="text" name="name" value="<%= request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
 				</tr>
 				<tr>
