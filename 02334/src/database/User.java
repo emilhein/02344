@@ -7,6 +7,7 @@ public class User {
 	public static final int ADMINISTRATOR = 0;
 	public static final int MODERATOR = 1;
 	public static final int USER = 2;
+	public static final int BLOCKED = 3;
 
 	private Connector connector;
 	private int identifier;

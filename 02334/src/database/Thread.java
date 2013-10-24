@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class Thread {
 
@@ -57,6 +58,10 @@ public class Thread {
 	public Timestamp getCreated() {
 		
 		return created;
+	}
+	public List<Comment> getComments() throws Exception {
+		
+		return connector.getComments(this);
 	}
 	
 	public void setCategory(Category category) throws Exception {
