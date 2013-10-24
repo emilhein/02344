@@ -92,5 +92,10 @@ public class User {
 		
 		return Arrays.equals(this.password, Tools.hash(password));
 	}
+
+	public byte getPassword() {
+		// TODO Auto-generated method stub
+		return (Byte) null;
+	}
 	
 }
