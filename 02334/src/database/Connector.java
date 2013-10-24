@@ -345,10 +345,10 @@ public class Connector {
 			
 			// Insert
 			
-			createUser("administrator@test.com", "Administrator", "administrator", User.ADMINISTRATOR);
-			createUser("moderator@test.com", "Moderator", "moderator", User.MODERATOR);
-			createUser("bruger@test.com", "Bruger", "b1234567", User.USER);
-			createUser("blokeret@test.com", "Blokeret", "b1234567", User.BLOCKED);
+			createUser("administrator@test.com", "Administrator", "administrator123", User.ADMINISTRATOR);
+			createUser("moderator@test.com", "Moderator", "moderator123", User.MODERATOR);
+			createUser("bruger@test.com", "Bruger", "bruger123", User.USER);
+			createUser("blokeret@test.com", "Blokeret", "blokeret123", User.BLOCKED);
 
 			createCategory("Hovedkategori", null);
 			createCategory("Tom hovedkategori", null);
