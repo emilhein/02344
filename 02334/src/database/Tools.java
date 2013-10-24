@@ -46,7 +46,7 @@ public class Tools {
 	}
 	public static void validateUserType(int type) throws Exception {
 
-		if (type != User.ADMINISTRATOR && type != User.MODERATOR && type != User.USER) {
+		if (type != User.ADMINISTRATOR && type != User.MODERATOR && type != User.USER && type != User.BLOCKED) {
 			throw new IllegalArgumentException("Type is invalid.");
 		}
 		
@@ -67,5 +67,14 @@ public class Tools {
 		}
 		
 	}
+	
+	public static void validateCommentContent(String content) throws Exception {
+
+		if (!content.matches("^.{1,1000}$")) {
+			throw new IllegalArgumentException("Content is invalid.");
+		}
+		
+	}
+	
 	
 }

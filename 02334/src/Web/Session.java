@@ -31,28 +31,15 @@ public class Session {
 
 		logout();
 
+		User user;
 		try {
-			Tools.validateUserName(name);
 			Tools.validateUserPassword(password);
+			user = connector.getUser(name);
 		} catch (Exception e) {
 			return e.getMessage();
 		}
 
-		if (password == null || !password.matches("^.{5,8}$")) {
-			return "You must enter a valid password.";
-		}
-
-		// Check
-
-		User user;
-		try {
-			user = connector.getUser(Integer.parseInt(id));
-		} catch (Exception e) {
-			System.err.println("Wrong user id or password (" + e.getMessage()
-					+ ").");
-			return "Wrong user id or password.";
-		}
-
+	
 		if (!user.checkPassword(password)) {
 			return "Wrong user id or password.";
 		}

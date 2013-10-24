@@ -38,35 +38,6 @@ public class Connector {
 	
 	// Properties
 	
-	public List<User> getUsers() throws Exception {
-		
-		Statement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM users;");
-			List<User> list = new ArrayList<User>();
-
-			while (resultSet.next()) {
-				list.add(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")));
-			}
-			
-			return list;
-			
-		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception ex) {
-			}
-			try {
-				statement.close();
-			} catch (Exception ex) {
-			}
-		}
-		
-	}
 	public List<User> getUsers(int type) throws Exception {
 
 		PreparedStatement statement = null;
@@ -81,35 +52,6 @@ public class Connector {
 
 			while (resultSet.next()) {
 				list.add(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")));
-			}
-			
-			return list;
-			
-		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception ex) {
-			}
-			try {
-				statement.close();
-			} catch (Exception ex) {
-			}
-		}
-		
-	}
-	public List<Category> getCategories() throws Exception {
-		
-		Statement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM categories;");
-			List<Category> list = new ArrayList<Category>();
-
-			while (resultSet.next()) {
-				list.add(new Category(this, resultSet.getInt("identifier"), resultSet.getString("name"), resultSet.getInt("parent")));
 			}
 			
 			return list;
@@ -156,15 +98,16 @@ public class Connector {
 		}
 		
 	}
-	public List<Thread> getThreads() throws Exception {
+	public List<Thread> getThreads(Category category) throws Exception {
 		
-		Statement statement = null;
+		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
-			
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM threads;");
+
+			statement = connection.prepareStatement("SELECT * FROM threads WHERE category = ?;"); // TODO: Sort by changed.
+			statement.setInt(1, category.getIdentifier());
+			resultSet = statement.executeQuery();
 			List<Thread> list = new ArrayList<Thread>();
 
 			while (resultSet.next()) {
@@ -185,20 +128,20 @@ public class Connector {
 		}
 		
 	}
-	public List<Thread> getThreads(Category category) throws Exception {
+	public List<Comment> getComments(Thread thread) throws Exception {
 		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
 
-			statement = connection.prepareStatement("SELECT * FROM threads WHERE category = ?;");
-			statement.setInt(1, category.getIdentifier());
+			statement = connection.prepareStatement("SELECT * FROM comments WHERE thread = ?;"); // TODO: Sort by identifier.
+			statement.setInt(1, thread.getIdentifier());
 			resultSet = statement.executeQuery();
-			List<Thread> list = new ArrayList<Thread>();
+			List<Comment> list = new ArrayList<Comment>();
 
 			while (resultSet.next()) {
-				list.add(new Thread(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("category"), resultSet.getString("name"), resultSet.getBoolean("sticky"), resultSet.getBoolean("closed"), resultSet.getTimestamp("created")));
+				list.add(new Comment(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("thread"), resultSet.getString("content"), resultSet.getTimestamp("changed")));
 			}
 			
 			return list;
@@ -304,7 +247,36 @@ public class Connector {
 		}
 		
 	}
-	
+	public Thread getThread(int identifier) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM threads WHERE identifier = ?;");
+			statement.setInt(1, identifier);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a thread where identifier is '" + identifier + "'.");
+			}
+			
+			return new Thread(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("category"), resultSet.getString("name"), resultSet.getBoolean("sticky"), resultSet.getBoolean("closed"), resultSet.getTimestamp("created"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+
 	// Functions
 	
 	public void reset() throws Exception {
@@ -373,9 +345,10 @@ public class Connector {
 			
 			// Insert
 			
-			createUser("administrator@test.com", "Administrator", "a1234567", 0);
-			createUser("moderator@test.com", "Moderator", "m1234567", 1);
-			createUser("bruger@test.com", "Bruger", "b1234567", 2);
+			createUser("administrator@test.com", "Administrator", "administrator123", User.ADMINISTRATOR);
+			createUser("moderator@test.com", "Moderator", "moderator123", User.MODERATOR);
+			createUser("bruger@test.com", "Bruger", "bruger123", User.USER);
+			createUser("blokeret@test.com", "Blokeret", "blokeret123", User.BLOCKED);
 
 			createCategory("Hovedkategori", null);
 			createCategory("Tom hovedkategori", null);
@@ -389,10 +362,10 @@ public class Connector {
 			createThread(getUser(3), getCategory(5), "Lukket tråd", false, true);
 			createThread(getUser(3), getCategory(5), "Tråd", false, false);
 			
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (1, 1, 'Tekst i første tråd.');");
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (2, 2, 'Tekst i anden tråd.');");
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 3, 'Tekst i tredje tråd.');");
-			statement.executeUpdate("INSERT INTO comments (user, thread, content) VALUES (3, 4, 'Tekst i fjerde tråd.');");
+			createComment(getUser(1), getThread(1), "Tekst i fremhævet og lukket tråd.");
+			createComment(getUser(2), getThread(2), "Tekst i fremhævet tråd.");
+			createComment(getUser(3), getThread(3), "Tekst i lukket tråd.");
+			createComment(getUser(3), getThread(4), "Tekst i tråd.");
 			
 		} finally {
 			try {
@@ -468,6 +441,26 @@ public class Connector {
 		}
 		
 	}
+	public void createComment(User user, Thread thread, String content) throws Exception {
+
+		Tools.validateCommentContent(content);
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("INSERT INTO comments (user, thread, content) VALUES (?, ?, ?);");
+			statement.setInt(1, user.getIdentifier());
+			statement.setInt(2, thread.getIdentifier());
+			statement.setString(3, content);
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	protected void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
 		
@@ -518,6 +511,23 @@ public class Connector {
 			statement.setBoolean(3, sticky);
 			statement.setBoolean(4, closed);
 			statement.setInt(5, identifier);
+			statement.executeUpdate();
+		} finally {
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	protected void updateComment(int identifier, String content) throws Exception {
+		
+		PreparedStatement statement = null;
+		
+		try {
+			statement = connection.prepareStatement("UPDATE comments SET content = ? WHERE identifier = ?;");
+			statement.setString(1, content);
+			statement.setInt(2, identifier);
 			statement.executeUpdate();
 		} finally {
 			try {
