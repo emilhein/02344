@@ -1,52 +1,47 @@
 package Web;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import database.Connector;
 import database.Tools;
 import database.User;
 
 public class Session {
-	private static Object lock = new Object();
-	private static Connector connector = null;
+	
 	private User user;
 
-	public Session() throws Exception {
-		synchronized (lock) {
-			if (connector == null)
-				;
-			connector = new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115",
-					"s123115", "F5iCtVPs4rtHu4oM");
-		}
+	// Properties
 
+	public User getUser() {
+
+		return user;
+	}
+	
+	public boolean isLoggedIn() {
+
+		return user != null;
 	}
 
-	public static Connector getConnector() {
-		return connector;
+	// Functions
 
-	}
-
-	public String login(String name, String password) {
+	public String login(Application application, String mailOrname, String password) {
 
 		logout();
 
 		User user;
+		
 		try {
 			Tools.validateUserPassword(password);
-			user = connector.getUser(name);
+			user = application.getConnector().getUser(mailOrname);
 		} catch (Exception e) {
 			return e.getMessage();
 		}
 
-	
 		if (!user.checkPassword(password)) {
-			return "Wrong user id or password.";
+			return "Wrong password.";
 		}
 
 		if (user.getType() == User.BLOCKED) {
-			return "You are Blocked.";
+			return "You are currently blocked.";
 		}
+		
 		this.user = user;
 		return null;
 	}
@@ -55,16 +50,6 @@ public class Session {
 
 		user = null;
 
-	}
-
-	public boolean isLoggedIn() {
-
-		return user != null;
-	}
-
-	public User getUser() {
-
-		return user;
 	}
 
 }
