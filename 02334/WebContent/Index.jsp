@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="database.Connector, database.Category, database.User" %>
+<jsp:useBean id="a" class="Web.Application" scope="application"/>
 <jsp:useBean id="s" class="Web.Session" scope="session"/>
 <jsp:setProperty name="s" property="*"/>
 
@@ -17,7 +18,7 @@
 	<div id="mainDesign"><h1>Welcome</h1></div>
 	<%Category parent = null;
 	try{
-	parent=s.getConnector().getCategory(Integer.parseInt(request.getParameter("Category")));
+	parent=a.getConnector().getCategory(Integer.parseInt(request.getParameter("Category")));
 	if (parent.getParent() == null){%>
 	<br>Go back to: <a href="?"><%=parent.getName()%></a><br/> 
 	<%}else	{%>
@@ -25,7 +26,7 @@
 	<%
 	}
 	}	catch (Exception e) {} 
-	for (Category category : s.getConnector().getCategories(parent)) { 
+	for (Category category : a.getConnector().getCategories(parent)) { 
 	%>
 	<div id="Categories">
 		<table>
