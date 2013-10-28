@@ -8,5 +8,44 @@
 </head>
 <body>
 
+		<div id="mainDesign"><h1>Welcome</h1></div>
+	<%Category parent = null;
+	try{
+	parent=s.getConnector().getCategory(Integer.parseInt(request.getParameter("Category")));
+	if (parent.getParent() == null){%>
+	<br>Go back to: <a href="?"><%=parent.getName()%></a><br/> 
+	<%}else	{%>
+		<br>Go back to: <a href="?Category=<%=parent.getParent().getIdentifier()%>"><%=parent.getName()%></a><br/>	
+	<%
+	}
+	}	catch (Exception e) {} 
+	for (Category category : s.getConnector().getCategories(parent)) { 
+	%>
+	<div id="Categories">
+		<table>
+			<tr>
+				<td><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a>
+				<td />
+			</tr>
+			<tr>
+				<td>Description of the category</td>
+				<td>Number of Threads</td>
+			</tr>
+			
+		</table>
+	</div>
+	<% 
+	}
+	
+	%>
+	<%if ( parent != null){
+	for (database.Thread thread : parent.getThreads()) { 
+	%>
+		<br><a href="?Thread=<%=thread.getIdentifier()%>"><%=thread.getName()%></a><br/>
+	<% 
+	}
+	}
+	%>
+
 </body>
 </html>
