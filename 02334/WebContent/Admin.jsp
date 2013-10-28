@@ -1,6 +1,7 @@
 <%@page import="org.omg.CORBA.Request"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"	pageEncoding="ISO-8859-1"%>
 <%@ page import="database.Connector, database.Category, database.User"%>
+<jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session" />
 <jsp:setProperty name="s" property="*" />
 
@@ -16,7 +17,7 @@
 
 <% if (request.getMethod().equalsIgnoreCase("post")) {
 			try {
-				User user = s.getConnector().getUser(request.getParameter("mail"));
+				User user = a.getConnector().getUser(request.getParameter("mail"));
 				if (request.getParameter("action").equalsIgnoreCase("promote")){
 					user.setType(user.getType()-1);
 				}else {
@@ -42,7 +43,7 @@
 				</tr>
 
 				<%
-					for (User user : s.getConnector().getUsers(User.ADMINISTRATOR)) {
+					for (User user : a.getConnector().getUsers(User.ADMINISTRATOR)) {
 				%>
 				<tr>
 					<td><%=user.getName()%></td>
@@ -66,7 +67,7 @@
 					<th>Email</th>
 				</tr>
 				<%
-					for (User user : s.getConnector().getUsers(User.MODERATOR)) {
+					for (User user : a.getConnector().getUsers(User.MODERATOR)) {
 				%>
 
 
@@ -98,7 +99,7 @@
 				</tr>
 
 				<%
-					for (User user : s.getConnector().getUsers(User.USER)) {
+					for (User user : a.getConnector().getUsers(User.USER)) {
 				%>
 
 
@@ -130,7 +131,7 @@
 					<th>Email</th>
 				</tr>
 				<%
-					for (User user : s.getConnector().getUsers(User.BLOCKED)) {
+					for (User user : a.getConnector().getUsers(User.BLOCKED)) {
 				%>
 
 
