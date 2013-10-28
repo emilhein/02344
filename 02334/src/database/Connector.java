@@ -346,10 +346,24 @@ public class Connector {
 			// Insert
 			
 			createUser("administrator@test.com", "Administrator", "administrator123", User.ADMINISTRATOR);
+			createUser("administrator2@test.com", "Administrator2", "administrator123", User.ADMINISTRATOR);
+			createUser("administrator3@test.com", "Administrator3", "administrator123", User.ADMINISTRATOR);
+			
 			createUser("moderator@test.com", "Moderator", "moderator123", User.MODERATOR);
+			createUser("moderator2@test.com", "Moderator2", "moderator123", User.MODERATOR);
+			createUser("moderator3@test.com", "Moderator3", "moderator123", User.MODERATOR);
+			
 			createUser("bruger@test.com", "Bruger", "bruger123", User.USER);
+			createUser("bruger2@test.com", "Bruger2", "bruger123", User.USER);
+			createUser("bruger3@test.com", "Bruger3", "bruger123", User.USER);
+			
 			createUser("blokeret@test.com", "Blokeret", "blokeret123", User.BLOCKED);
-
+			createUser("blokeret2@test.com", "Blokeret2", "blokeret123", User.BLOCKED);
+			createUser("blokeret3@test.com", "Blokeret3", "blokeret123", User.BLOCKED);
+			
+			
+			
+			
 			createCategory("Hovedkategori", null);
 			createCategory("Tom hovedkategori", null);
 			createCategory("Underkategori", getCategory(1));
@@ -357,15 +371,15 @@ public class Connector {
 			createCategory("Underunderkategori", getCategory(3));
 			createCategory("Tom underunderkategori", getCategory(3));
 
-			createThread(getUser(1), getCategory(1), "Fremhævet og lukket tråd", true, true);
-			createThread(getUser(2), getCategory(3), "Fremhævet tråd", true, false);
-			createThread(getUser(3), getCategory(5), "Lukket tråd", false, true);
-			createThread(getUser(3), getCategory(5), "Tråd", false, false);
+			createThread(getUser("Administrator"), getCategory(1), "Fremhævet og lukket tråd", true, true);
+			createThread(getUser("Moderator"), getCategory(3), "Fremhævet tråd", true, false);
+			createThread(getUser("Bruger"), getCategory(5), "Lukket tråd", false, true);
+			createThread(getUser("Blokeret"), getCategory(5), "Tråd", false, false);
 			
-			createComment(getUser(1), getThread(1), "Tekst i fremhævet og lukket tråd.");
-			createComment(getUser(2), getThread(2), "Tekst i fremhævet tråd.");
-			createComment(getUser(3), getThread(3), "Tekst i lukket tråd.");
-			createComment(getUser(3), getThread(4), "Tekst i tråd.");
+			createComment(getUser("Administrator"), getThread(1), "Tekst i fremhævet og lukket tråd.");
+			createComment(getUser("Moderator"), getThread(2), "Tekst i fremhævet tråd.");
+			createComment(getUser("Bruger"), getThread(3), "Tekst i lukket tråd.");
+			createComment(getUser("Blokeret"), getThread(4), "Tekst i tråd.");
 			
 		} finally {
 			try {
