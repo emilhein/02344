@@ -16,29 +16,25 @@ public class Session {
 
 	// Functions
 
-	public String signin(Application application, String mailOrName, String password) {
+	public void signin(Application application, String mailOrName, String password) throws Exception {
 
 		signout();
 
 		User user;
 		
-		try {
-			Tools.validateUserPassword(password);
-			user = application.getConnector().getUser(mailOrName);
-		} catch (Exception e) {
-			return e.getMessage();
-		}
+		Tools.validateUserPassword(password);
+		user = application.getConnector().getUser(mailOrName);
 
 		if (!user.checkPassword(password)) {
-			return "Wrong password.";
+			throw new Exception("Wrong password.");
 		}
 
 		if (user.getType() == User.BLOCKED) {
-			return "You are currently blocked.";
+			throw new Exception("You are currently blocked.");
 		}
 		
 		this.user = user;
-		return null;
+		
 	}
 
 	public void signout() {
