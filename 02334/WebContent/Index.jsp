@@ -37,7 +37,7 @@
 						<td><input type="submit" value="Sign In"></td>
 					</tr>
 					<tr>
-						<td><a href="CreateUser.jsp">Create User</a></td>
+						<td><a href="?page=CreateUser">Create User</a></td>
 						<td><span style="color:red"><%= message != null ? message : "" %></span></td>
 					</tr>
 				</table>
