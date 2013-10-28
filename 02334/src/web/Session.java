@@ -1,4 +1,4 @@
-package Web;
+package web;
 
 import database.Tools;
 import database.User;
@@ -13,23 +13,18 @@ public class Session {
 
 		return user;
 	}
-	
-	public boolean isLoggedIn() {
-
-		return user != null;
-	}
 
 	// Functions
 
-	public String login(Application application, String mailOrname, String password) {
+	public String signin(Application application, String mailOrName, String password) {
 
-		logout();
+		signout();
 
 		User user;
 		
 		try {
 			Tools.validateUserPassword(password);
-			user = application.getConnector().getUser(mailOrname);
+			user = application.getConnector().getUser(mailOrName);
 		} catch (Exception e) {
 			return e.getMessage();
 		}
@@ -46,7 +41,7 @@ public class Session {
 		return null;
 	}
 
-	public void logout() {
+	public void signout() {
 
 		user = null;
 

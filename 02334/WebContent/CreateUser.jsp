@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@ page import="database.Connector" %>
-<jsp:useBean id="a" class="Web.Application" scope="application"/>
-<jsp:useBean id="s" class="Web.Session" scope="session"/>
+<jsp:useBean id="a" class="web.Application" scope="application"/>
+<jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
 	String message = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
@@ -10,7 +9,7 @@
 				throw new Exception("Passwords do not match.");
 			}
 			a.getConnector().createUser(request.getParameter("mail"), request.getParameter("name"), request.getParameter("password1"), database.User.USER);
-			s.login(a, request.getParameter("name"), request.getParameter("password1"));
+			s.signin(a, request.getParameter("name"), request.getParameter("password1"));
 			response.sendRedirect("Index.jsp");
 		} catch (Exception e) {
 			message = e.getMessage();
