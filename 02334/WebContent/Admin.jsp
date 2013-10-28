@@ -34,6 +34,7 @@ for (User user : s.getConnector().getUsers(User.ADMINISTRATOR)) {
 </div>
 	<%
 for (User user : s.getConnector().getUsers(User.MODERATOR)) { 
+	
 	%>
 	<div id="lists">
 	<table>
