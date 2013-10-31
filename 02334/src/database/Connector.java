@@ -365,6 +365,10 @@ public class Connector {
 			
 			
 			createCategory("Hovedkategori", null);
+			createCategory("Hovedkategori2", null);
+			createCategory("Hovedkategor3", null);
+			createCategory("Hovedkategor4", null);
+			createCategory("Hovedkategor5", null);
 			createCategory("Tom hovedkategori", null);
 			createCategory("Underkategori", getCategory(1));
 			createCategory("Tom underkategori", getCategory(1));

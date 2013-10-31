@@ -13,7 +13,7 @@
 <body>
 
 	<div id="mainDesign">
-		<h1>Welcome</h1>
+	<h1><a href="Index.jsp">Welcome</a></h1>
 	</div>
 	<%Category parent = null;
 	try{
