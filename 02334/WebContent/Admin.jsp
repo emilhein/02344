@@ -48,12 +48,15 @@
 				<tr>
 					<td><%=user.getName()%></td>
 					<td><%=user.getMail()%></td>
+					<td></td>
 					<td>
+					<% if (s.getUser().getIdentifier() !=user.getIdentifier()){ %>
 						<form method="post">
 							<input type="hidden" name="action" value="degrade">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="-">	
+							<input type="submit" value="&#8595;">	
 						</form>
+						<%} %>
 					</td>
 
 				</tr>
@@ -78,14 +81,14 @@
 						<form method="post">
 							<input type="hidden" name="action" value="promote">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="+">	
+							<input type="submit" value="&#8593;">	
 						</form>
 					</td>
 					<td>
 						<form method="post">
 							<input type="hidden" name="action" value="degrade">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="-">	
+							<input type="submit" value="&#8595;">	
 						</form>
 					</td>
 				</tr>
@@ -110,14 +113,14 @@
 						<form method="post">
 							<input type="hidden" name="action" value="promote">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="+">	
+							<input type="submit" value="&#8593;">	
 						</form>
 					</td>
 					<td>
 						<form method="post">
 							<input type="hidden" name="action" value="degrade">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="-">	
+							<input type="submit" value="&#8595;">	
 						</form>
 					</td>
 				</tr>
@@ -142,7 +145,7 @@
 						<form method="post">
 							<input type="hidden" name="action" value="promote">
 							<input type="hidden" name="mail" value="<%= user.getMail() %>">	
-							<input type="submit" value="+">	
+							<input type="submit" value="&#8593;">	
 						</form>
 					</td>
 				</tr>
