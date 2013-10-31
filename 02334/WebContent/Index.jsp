@@ -58,6 +58,12 @@
 						
 						<% } %>
 					</tr>
+					<tr>
+						<% if (s.getUser().getType() == User.MODERATOR) { %>
+						<td><a href="Admin.jsp">Moderator Panel</a></td>
+						
+						<% } %>
+					</tr>
 				</table>
 			</form>
 		</div>
