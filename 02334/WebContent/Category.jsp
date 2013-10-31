@@ -56,6 +56,7 @@
 		<table>
 			<tr>
 				<td><a href="?Thread=<%=thread.getIdentifier()%>"><%=thread.getName()%></a>
+			
 				<td />
 			</tr>
 		</table>	

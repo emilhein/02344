@@ -7,7 +7,7 @@
 <title>new Thread</title>
 </head>
 <body>
-
+hej fra NewThread!!!
 
 </body>
 </html>
