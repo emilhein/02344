@@ -34,7 +34,7 @@
 	<div class="Categories">
 		<table>
 			<tr>
-				<td><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a>
+				<td><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a><br>
 				<td />
 			</tr>
 			<tr>
@@ -43,7 +43,7 @@
 			</tr>
 
 		</table>
-	</div>
+	</div><br>
 	<% 
 	}
 	%>
