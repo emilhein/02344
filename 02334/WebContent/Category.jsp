@@ -18,8 +18,7 @@
 	<%Category parent = null;
 	try{
 	parent=a.getConnector().getCategory(Integer.parseInt(request.getParameter("Category")));
-	if (parent.getParent() == null){
-	%>
+	if (parent.getParent() == null){%>
 	<br>Go back to:
 	<a href="?"><%=parent.getName()%></a>
 	<br />
@@ -32,7 +31,7 @@
 	}	catch (Exception e) {} 
 	for (Category category : a.getConnector().getCategories(parent)) { 
 	%>
-	<div id="Categories">
+	<div class="Categories">
 		<table>
 			<tr>
 				<td><a href="?Category=<%=category.getIdentifier()%>"><%=category.getName()%></a>
@@ -49,18 +48,23 @@
 	}
 	%>
 
-	<div id="Threads">
-		
+	
 		<%if ( parent != null){
 	for (database.Thread thread : parent.getThreads()) { 
 	%>
+	<div class="Threads">
+		<table>
+			<tr>
+				<td><a href="?Thread=<%=thread.getIdentifier()%>"><%=thread.getName()%></a>
+				<td />
+			</tr>
+		</table>	
+	</div>
 		
-		<a href="?Thread=<%=thread.getIdentifier()%>"><%=thread.getName()%></a><br>
 		<%
 			}
 			}
 		%>
-		
-	</div>
+	
 </body>
 </html>
