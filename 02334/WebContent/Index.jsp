@@ -55,11 +55,13 @@
 					<tr>
 						<% if (s.getUser().getType() == User.ADMINISTRATOR) { %>
 						<td><a href="Admin.jsp">Administrator Panel</a></td>
+						
 						<% } %>
 					</tr>
 				</table>
 			</form>
 		</div>
 	<% } %>
+	<jsp:include page="Category.jsp" />
 	</body>
 </html>
