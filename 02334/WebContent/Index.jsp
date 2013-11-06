@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="database.User" %>
+<%@ page import="web.Page" %>
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
@@ -15,6 +16,7 @@
 			message = e.getMessage();
 		}
 	}
+	Page p = a.getPage(request.getParameter("page"), s.getUser());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,7 +39,8 @@
 						<td><input type="submit" value="Sign In"></td>
 					</tr>
 					<tr>
-						<td><a href="CreateUser.jsp">Create User</a></td>
+						<td><a href="?page=home">Home</a></td>
+						<td><a href="?page=createuser">Create user</a></td>
 						<td><span style="color:red"><%= message != null ? message : "" %></span></td>
 					</tr>
 				</table>
@@ -49,25 +52,25 @@
 				<input type="hidden" name="action" value="signout">
 				<table>
 					<tr>
-						<td>Hallo <%= s.getUser().getName() %></td>
+						<td>Welcome <%= s.getUser().getName() %></td>
 						<td><input type="submit" value="Sign Out"></td>
 					</tr>
 					<tr>
-						<% if (s.getUser().getType() == User.ADMINISTRATOR) { %>
-						<td><a href="Admin.jsp">Administrator Panel</a></td>
-						
-						<% } %>
-					</tr>
-					<tr>
-						<% if (s.getUser().getType() == User.MODERATOR) { %>
-						<td><a href="Admin.jsp">Moderator Panel</a></td>
-						
+						<td><a href="?page=home">Home</a></td>
+						<% if (s.getUser().getType() <= User.MODERATOR) { %>
+						<td><a href="?page=administrateusers">Administrate users</a></td>
 						<% } %>
 					</tr>
 				</table>
 			</form>
 		</div>
 	<% } %>
-	<jsp:include page="Category.jsp" />
+	<div id="title">
+		<h3><%= p.getTitle() %></h3>
+		<br>
+	</div>
+	<div id="contect">
+		<jsp:include page="<%= p.getPath() %>"/>
+	</div>
 	</body>
 </html>
