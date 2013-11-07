@@ -42,6 +42,7 @@
 						<td><a href="?page=home">Home</a></td>
 						<td><a href="?page=category">Categories</a></td>
 						<td><a href="?page=createuser">Create user</a></td>
+						
 						<td><span style="color:red"><%= message != null ? message : "" %></span></td>
 					</tr>
 				</table>
@@ -61,6 +62,9 @@
 						<td><a href="?page=category">Categories</a></td>
 						<% if (s.getUser().getType() <= User.MODERATOR) { %>
 						<td><a href="?page=administrateusers">Administrate users</a></td>
+						<% } %>
+						<% if (s.getUser().getType() <= User.USER) { %>
+					<td><a href="?page=createThread">Create thread</a></td>
 						<% } %>
 					</tr>
 				</table>
