@@ -361,14 +361,7 @@ public class Connector {
 			createUser("blokeret2@test.com", "Blokeret2", "blokeret123", User.BLOCKED);
 			createUser("blokeret3@test.com", "Blokeret3", "blokeret123", User.BLOCKED);
 			
-			
-			
-			
 			createCategory("Hovedkategori", null);
-			createCategory("Hovedkategori2", null);
-			createCategory("Hovedkategor3", null);
-			createCategory("Hovedkategor4", null);
-			createCategory("Hovedkategor5", null);
 			createCategory("Tom hovedkategori", null);
 			createCategory("Underkategori", getCategory(1));
 			createCategory("Tom underkategori", getCategory(1));
