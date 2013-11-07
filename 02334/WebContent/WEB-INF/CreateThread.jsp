@@ -18,7 +18,7 @@
 <% if (s.getUser() == null) { %>
 	Fill out the information below.<br><br>
 	<form method="post">
-		<input type="hidden" name="action" value="createuser">
+		<input type="hidden" name="action" value="createThread">
 		<table>
 			<tr>
 				<td>Mail:</td>

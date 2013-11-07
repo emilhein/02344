@@ -26,7 +26,7 @@
 		<title><%= p.getTitle() %> - 07_2344</title>
 	</head>
 	<body>
-<<<<<<< HEAD
+
 	<% if (s.getUser() == null) { %>
 		<div id="login">
 			<form method="post">
@@ -43,12 +43,12 @@
 						<td><a href="?page=home">Home</a></td>
 						<td><a href="?page=category">Categories</a></td>
 						<td><a href="?page=createuser">Create user</a></td>
-						
+							
 						<td><span style="color:red"><%= message != null ? message : "" %></span></td>
 					</tr>
 				</table>
 			</form>
-=======
+		</div>
 		<% if (s.getUser() == null) { %>
 			<div id="login">
 				<form method="post">
@@ -85,6 +85,9 @@
 							<% if (s.getUser().getType() <= User.MODERATOR) { %>
 								<td><a href="?page=administrateusers">Administrate users</a></td>
 							<% } %>
+							<% if (s.getUser().getType() <= User.USER) { %>
+					<td><a href="?page=createThread">Create thread</a></td>
+						<% } %>
 						</tr>
 					</table>
 				</form>
@@ -92,9 +95,9 @@
 		<% } %>
 		<div id="contect">
 			<jsp:include page="<%= p.getPath() %>"/>
->>>>>>> branch 'master' of https://github.com/emilhein/02344.git
+
 		</div>
-<<<<<<< HEAD
+
 	<% } else { %>
 		<div id="login">
 			<form method="post">
@@ -110,9 +113,7 @@
 						<% if (s.getUser().getType() <= User.MODERATOR) { %>
 						<td><a href="?page=administrateusers">Administrate users</a></td>
 						<% } %>
-						<% if (s.getUser().getType() <= User.USER) { %>
-					<td><a href="?page=createThread">Create thread</a></td>
-						<% } %>
+						
 					</tr>
 				</table>
 			</form>
@@ -125,7 +126,6 @@
 	<div id="contect">
 		<jsp:include page="<%= p.getPath() %>"/>
 	</div>
-=======
->>>>>>> branch 'master' of https://github.com/emilhein/02344.git
+
 	</body>
 </html>
