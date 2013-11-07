@@ -19,6 +19,7 @@ public class Application {
 		pages.add(new Page("Home", "Home"));
 		pages.add(new Page("Create user", "CreateUser"));
 		pages.add(new Page("Administrate users", "AdministrateUsers", User.MODERATOR));
+		pages.add(new Page("Category", "Category"));
 		
 	}
 	
