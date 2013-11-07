@@ -17,8 +17,7 @@
 	right: 75px;
 	top: 0px;
 }
-.Categories {
-	
+.Category {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 22px;
 	color: #000000;
@@ -30,8 +29,33 @@
 	width: 45em;
 	-moz-border-radius: 1em 1em 1em 1em;
 	border-radius: 1em 1em 1em 1em;
-
-}	
+}
+.Thread {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	color: #000000;
+	font-weight: bold;
+	border-style:solid;
+	border-width:2px;
+	background-color:#ff9900
+	height: 5em;
+	width: 25em;
+	-moz-border-radius: 1em 1em 1em 1em;
+	border-radius: 1em 1em 1em 1em;
+}
+.Comment {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 22px;
+	color: #000000;
+	font-weight: bold;
+	border-style:solid;
+	border-width:2px;
+	background-color:#ff9900
+	height: 5em;
+	width: 25em;
+	-moz-border-radius: 1em 1em 1em 1em;
+	border-radius: 1em 1em 1em 1em;
+}
 
 #table {
 	
@@ -46,20 +70,4 @@
 	border-style:solid;
 	border-width:2px;
 	
-}	
-	
-.Threads {
-	
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 22px;
-	color: #000000;
-	font-weight: bold;
-	border-style:solid;
-	border-width:2px;
-	background-color:#ff9900
-	height: 5em;
-	width: 25em;
-	-moz-border-radius: 1em 1em 1em 1em;
-	border-radius: 1em 1em 1em 1em;
-
 }

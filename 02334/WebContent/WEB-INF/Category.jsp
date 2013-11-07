@@ -5,7 +5,6 @@
 <%
 	Category current = null;
 	Category parent = null;
-	String message = null;
 	try {
 		current = a.getConnector().getCategory(Integer.parseInt(request.getParameter("category")));
 		parent = current.getParent();
@@ -18,7 +17,7 @@
 	Go back to <a href="?page=category">Categories</a><br><br>
 <% } %>
 <% for (Category category : a.getConnector().getCategories(current)) { %>
-	<div class="Categories">
+	<div class="Category">
 		<table>
 			<tr>
 				<td><a href="?page=category&category=<%= category.getIdentifier() %>"><%= category.getName() %></a></td>
@@ -27,12 +26,13 @@
 		</table>
 	</div>
 <% } %>
-<% if (parent != null) { %>
+<br><br>
+<% if (current != null) { %>
 	<% for (database.Thread thread : current.getThreads()) { %>
-		<div class="Threads">
+		<div class="Thread">
 			<table>
 				<tr>
-					<td><a href="?page=threads&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
+					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
 					<td>(Number of Comments)</td>
 				</tr>
 			</table>	
