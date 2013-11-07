@@ -27,7 +27,8 @@
 		</table>
 	</div>
 <% } %>
-<% if (parent != null) { %>
+<br><br>
+<% if (current != null) { %>
 	<% for (database.Thread thread : current.getThreads()) { %>
 		<div class="Threads">
 			<table>
