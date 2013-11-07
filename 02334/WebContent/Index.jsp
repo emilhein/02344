@@ -23,56 +23,52 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<link rel="stylesheet" type="text/css" href="Style.css">
-		<title>07_2344</title>
+		<title><%= p.getTitle() %> - 07_2344</title>
 	</head>
 	<body>
-	<% if (s.getUser() == null) { %>
-		<div id="login">
-			<form method="post">
-				<input type="hidden" name="action" value="signin">
-				<table>
-					<tr>
-						<td>Mail or name:</td>
-						<td><input type="text" name="mailOrName" value="<%= request.getParameter("mailOrName") != null ? request.getParameter("mailOrName") : "" %>"></td>
-						<td>Password:</td>
-						<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
-						<td><input type="submit" value="Sign In"></td>
-					</tr>
-					<tr>
-						<td><a href="?page=home">Home</a></td>
-						<td><a href="?page=category">Categories</a></td>
-						<td><a href="?page=createuser">Create user</a></td>
-						<td><span style="color:red"><%= message != null ? message : "" %></span></td>
-					</tr>
-				</table>
-			</form>
+		<% if (s.getUser() == null) { %>
+			<div id="login">
+				<form method="post">
+					<input type="hidden" name="action" value="signin">
+					<table>
+						<tr>
+							<td>Mail or name:</td>
+							<td><input type="text" name="mailOrName" value="<%= request.getParameter("mailOrName") != null ? request.getParameter("mailOrName") : "" %>"></td>
+							<td>Password:</td>
+							<td><input type="password" name="password" value="<%= request.getParameter("password") != null ? request.getParameter("password") : "" %>"></td>
+							<td><input type="submit" value="Sign In"></td>
+						</tr>
+						<tr>
+							<td><a href="?page=home">Home</a></td>
+							<td><a href="?page=category">Categories</a></td>
+							<td><a href="?page=createuser">Create user</a></td>
+							<td><span style="color:red"><%= message != null ? message : "" %></span></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		<% } else { %>
+			<div id="login">
+				<form method="post">
+					<input type="hidden" name="action" value="signout">
+					<table>
+						<tr>
+							<td>Welcome <%= s.getUser().getName() %></td>
+							<td><input type="submit" value="Sign Out"></td>
+						</tr>
+						<tr>
+							<td><a href="?page=home">Home</a></td>
+							<td><a href="?page=category">Categories</a></td>
+							<% if (s.getUser().getType() <= User.MODERATOR) { %>
+								<td><a href="?page=administrateusers">Administrate users</a></td>
+							<% } %>
+						</tr>
+					</table>
+				</form>
+			</div>
+		<% } %>
+		<div id="contect">
+			<jsp:include page="<%= p.getPath() %>"/>
 		</div>
-	<% } else { %>
-		<div id="login">
-			<form method="post">
-				<input type="hidden" name="action" value="signout">
-				<table>
-					<tr>
-						<td>Welcome <%= s.getUser().getName() %></td>
-						<td><input type="submit" value="Sign Out"></td>
-					</tr>
-					<tr>
-						<td><a href="?page=home">Home</a></td>
-						<td><a href="?page=category">Categories</a></td>
-						<% if (s.getUser().getType() <= User.MODERATOR) { %>
-						<td><a href="?page=administrateusers">Administrate users</a></td>
-						<% } %>
-					</tr>
-				</table>
-			</form>
-		</div>
-	<% } %>
-	<div id="title">
-		<h3><%= p.getTitle() %></h3>
-		<br>
-	</div>
-	<div id="contect">
-		<jsp:include page="<%= p.getPath() %>"/>
-	</div>
 	</body>
 </html>
