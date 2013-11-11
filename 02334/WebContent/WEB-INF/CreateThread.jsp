@@ -1,52 +1,56 @@
+<%@page import="database.Category"%>
+<%@page import="database.Connector"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
+	//createThread(User user, Category category, String name, boolean sticky, boolean closed
+	//createComment(User user, Thread thread, String content)
+	
+	database.Category category = a.getConnector().getCategory(1);
+	database.Thread thread = a.getConnector().getThread(1);
+	
+	
+	
 	String message = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-			if (!request.getParameter("password1").equals(request.getParameter("password2"))) {
-				throw new Exception("Passwords do not match.");
-			}
-			a.getConnector().createUser(request.getParameter("mail"), request.getParameter("name"), request.getParameter("password1"), database.User.USER);
-			s.signin(a, request.getParameter("name"), request.getParameter("password1"));
-		} catch (Exception e) {
-			message = e.getMessage();
-		}
+			a.getConnector().createTread(database.User.USER, category, request.getParameter("tilte"), false, false );
+			a.getConnector().createComment(database.User.USER, thread, request.getParameter("content"));
+	} catch (Exception e) {
+		message = e.getMessage();
 	}
-%>
-<% if (s.getUser() == null) { %>
-	Fill out the information below.<br><br>
+	}
+
+   if (s.getUser() == null) { %>
+
+
+Fill out the information below.<br><br>
 	<form method="post">
 		<input type="hidden" name="action" value="createThread">
 		<table>
 			<tr>
-				<td>Mail:</td>
-				<td><input type="text" name="mail" value="<%= request.getParameter("mail") != null ? request.getParameter("mail") : "" %>"></td>
+				<td>Title:</td>
+				<td><input type="text" name="title" value="<%= request.getParameter("title") != null ? request.getParameter("title") : "" %>"></td>
 			</tr>
 			<tr>
-				<td>Name:</td>
-				<td><input type="text" name="name" value="<%= request.getParameter("name") != null ? request.getParameter("name") : "" %>"></td>
+				<td>Content:</td>
+				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>" style="width:300px; height:100px;"></td>
 			</tr>
-			<tr>
-				<td>Password:</td>
-				<td><input type="password" name="password1" value="<%= request.getParameter("password1") != null ? request.getParameter("password1") : "" %>"></td>
-			</tr>
-			<tr>
-				<td>Password (repeat):</td>
-				<td><input type="password" name="password2" value="<%= request.getParameter("password2") != null ? request.getParameter("password2") : "" %>"></td>
-			</tr>
+			
 			<tr>
 				<td><br></td>
 				<td><br><input type="submit" value="Create"></td>
+				<td><br><span style="color:red"><%= message != null ? message : "" %></span></td>
 			</tr>
 			<tr>
 				<td><br></td>
-				<td><br><span style="color:red"><%= message != null ? message : "" %></span></td>
+				
 			</tr>
 		</table>
 	</form>
-<% } else { %>
+	<% }else { %>
 	Welcome <%= s.getUser().getName() %>!<br><br>
 	<a href="?page=home">Go back to the front page</a>
-<% } %>
+<%} %>
+	

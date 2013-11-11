@@ -13,6 +13,7 @@
 %>
 <% if (parent != null) { %>
 	Go back to <a href="?page=category&category=<%= parent.getIdentifier() %>"><%= parent.getName() %></a><br><br>
+	<td><a href="?page=createThread">Create thread</a></td>
 <% } else if (current != null) { %>
 	Go back to <a href="?page=category">Categories</a><br><br>
 <% } %>
@@ -33,6 +34,7 @@
 			<table>
 				<tr>
 					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
+					
 					<td>(Number of Comments)</td>
 				</tr>
 			</table>	

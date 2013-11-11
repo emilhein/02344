@@ -3,6 +3,7 @@
 <%@ page import="web.Page" %>
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
+
 <%
 	String message = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
