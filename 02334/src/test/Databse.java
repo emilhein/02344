@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import database.Category;
+import database.Comment;
 import database.Connector;
+import database.Thread;
 import database.User;
 
 public class Databse {
@@ -57,6 +59,7 @@ public class Databse {
 
 	}
 
+	@Test
 	public void createThread() throws Exception {
 		connector.createUser("createThread@test.com", "CreateThread",
 				"password", User.USER);
@@ -64,8 +67,27 @@ public class Databse {
 		User user = connector.getUser("CreateThread");
 		Category category = connector.getCategory(null, "createthread");
 		connector.createThread(user, category, "CreateThread", true, true);
-		database.Thread thread = connector.getThread(0);
-		
+		database.Thread thread = connector.getThread(category, "createthread");
 
+		assertNotNull(thread);
+		assertEquals(user.getIdentifier(), thread.getUser().getIdentifier());
+		assertEquals(category.getIdentifier(), thread.getCategory().getIdentifier());
+		assertEquals("createThread@test.com","CreateThread","createThread"  );
+
+	}
+
+	@Test
+	public void createComment() throws Exception {
+		
+		connector.createUser("createComment@test.com", "CreateComment",
+				"password", User.USER);
+		connector.createCategory("createcomment", null);
+		User user = connector.getUser("CreateComment");
+		database.Category category = connector.getCategory(null, "createcomment");
+		database.Thread thread = connector.getThread(category, "createthread");
+		connector.createComment(user, thread, "CreateComment");
+		database.Comment comment = connector.getComments(thread).get(0);
+		assertNotNull(comment);
+		assertEquals("createCommet@test.com", "CreateComment", "createcomment");
 	}
 }
