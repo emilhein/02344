@@ -71,23 +71,30 @@ public class Databse {
 
 		assertNotNull(thread);
 		assertEquals(user.getIdentifier(), thread.getUser().getIdentifier());
-		assertEquals(category.getIdentifier(), thread.getCategory().getIdentifier());
-		assertEquals("createThread@test.com","CreateThread","createThread"  );
-
+		assertEquals(category.getIdentifier(), thread.getCategory()
+				.getIdentifier());
+		assertEquals("CreateThread", thread.getName());
+		assertTrue(thread.getSticky());
+		assertTrue(thread.getClosed());
 	}
 
 	@Test
 	public void createComment() throws Exception {
-		
+
 		connector.createUser("createComment@test.com", "CreateComment",
 				"password", User.USER);
 		connector.createCategory("createcomment", null);
 		User user = connector.getUser("CreateComment");
-		database.Category category = connector.getCategory(null, "createcomment");
-		database.Thread thread = connector.getThread(category, "createthread");
+		database.Category category = connector.getCategory(null,
+				"createcomment");
+		connector.createThread(user, category, "CreateComment", true, true);
+		database.Thread thread = connector.getThread(category, "CreateComment");
 		connector.createComment(user, thread, "CreateComment");
 		database.Comment comment = connector.getComments(thread).get(0);
 		assertNotNull(comment);
-		assertEquals("createCommet@test.com", "CreateComment", "createcomment");
+		assertEquals("CreateComment", comment.getContent());
+		assertEquals(user.getIdentifier(), comment.getUser().getIdentifier());
+		assertEquals(thread.getIdentifier(), comment.getThread()
+				.getIdentifier());
 	}
 }
