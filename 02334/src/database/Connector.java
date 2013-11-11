@@ -106,7 +106,7 @@ public class Connector {
 		try {
 
 			statement = connection.prepareStatement("SELECT * FROM threads WHERE category = ?;"); // TODO: Sort by changed.
-			statement.setInt(1, category.getIdentifier());
+			statement.setInt(1, category == null ? 0 : category.getIdentifier());
 			resultSet = statement.executeQuery();
 			List<Thread> list = new ArrayList<Thread>();
 
@@ -255,7 +255,7 @@ public class Connector {
 		try {
 
 			statement = connection.prepareStatement("SELECT * FROM categories WHERE parent = ? AND name = ?;");
-			statement.setInt(1, parent.getIdentifier());
+			statement.setInt(1, parent == null ? 0 : parent.getIdentifier());
 			statement.setString(2, name);
 			resultSet = statement.executeQuery();
 
