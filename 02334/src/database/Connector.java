@@ -306,6 +306,36 @@ public class Connector {
 		}
 		
 	}
+	public Thread getThread(Category parent, String name) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM threads WHERE parent = ? AND name = ?;");
+			statement.setInt(1, parent == null ? 0 : parent.getIdentifier());
+			statement.setString(2, name);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a thread where parent is '" + parent.getIdentifier() + "' and name is '" + name + "'.");
+			}
+			
+			return new Thread(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("category"), resultSet.getString("name"), resultSet.getBoolean("sticky"), resultSet.getBoolean("closed"), resultSet.getTimestamp("created"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 
 	// Functions
 	
