@@ -247,6 +247,36 @@ public class Connector {
 		}
 		
 	}
+	public Category getCategory(Category parent, String name) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM categories WHERE parent = ? AND name = ?;");
+			statement.setInt(1, parent.getIdentifier());
+			statement.setString(2, name);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a category where parent is '" + parent.getIdentifier() + "' and name is '" + name + "'.");
+			}
+			
+			return new Category(this, resultSet.getInt("identifier"), resultSet.getString("name"), resultSet.getInt("parent"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	public Thread getThread(int identifier) throws Exception {
 
 		PreparedStatement statement = null;
