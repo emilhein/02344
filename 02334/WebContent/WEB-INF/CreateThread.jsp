@@ -7,16 +7,21 @@
 	//createThread(User user, Category category, String name, boolean sticky, boolean closed
 	//createComment(User user, Thread thread, String content)
 	
-	database.Category category = a.getConnector().getCategory(1);
-	database.Thread thread = a.getConnector().getThread(1);
+	
 	
 	
 	
 	String message = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-			a.getConnector().createTread(database.User.USER, category, request.getParameter("tilte"), false, false );
-			a.getConnector().createComment(database.User.USER, thread, request.getParameter("content"));
+			database.Category category = a.getConnector().getCategory(Integer.parseInt(request.getParameter("category")));
+			//
+						
+			a.getConnector().createTread(s.getUser(), category, request.getParameter("title"), false, false );
+			
+			
+			database.Thread thread = a.getConnector().getThread(getThread(category, request.getParameter("title")));
+			a.getConnector().createComment(s.getUser(), thread, request.getParameter("content"));
 	} catch (Exception e) {
 		message = e.getMessage();
 	}
@@ -28,6 +33,7 @@
 Fill out the information below.<br><br>
 	<form method="post">
 		<input type="hidden" name="action" value="createThread">
+		<input type="hidden" name="category" value="<%= request.getParameter("category")%>">
 		<table>
 			<tr>
 				<td>Title:</td>
