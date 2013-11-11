@@ -490,6 +490,9 @@ public class Connector {
 		}
 		
 	}
+	public void createThread(database.User user){
+		
+	}
 	public void createThread(User user, Category category, String name, boolean sticky, boolean closed) throws Exception {
 
 		Tools.validateThreadName(name);

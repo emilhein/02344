@@ -12,28 +12,31 @@
 	
 	
 	String message = null;
+	database.Thread thread = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
 			database.Category category = a.getConnector().getCategory(Integer.parseInt(request.getParameter("category")));
-			//
+			
 						
-			a.getConnector().createTread(s.getUser(), category, request.getParameter("title"), false, false );
+			a.getConnector().createThread(s.getUser(), category,request.getParameter("title"), false, false );
 			
 			
-			database.Thread thread = a.getConnector().getThread(getThread(category, request.getParameter("title")));
+			thread = a.getConnector().getThread(category, request.getParameter("title"));
 			a.getConnector().createComment(s.getUser(), thread, request.getParameter("content"));
+			
 	} catch (Exception e) {
 		message = e.getMessage();
+		thread = null;
 	}
 	}
 
-   if (s.getUser() == null) { %>
+   if (thread == null) { %>
 
 
 Fill out the information below.<br><br>
 	<form method="post">
 		<input type="hidden" name="action" value="createThread">
-		<input type="hidden" name="category" value="<%= request.getParameter("category")%>">
+		<input type="hidden" name="category" value="<%= request.getParameter("category") %>">
 		<table>
 			<tr>
 				<td>Title:</td>
@@ -42,6 +45,7 @@ Fill out the information below.<br><br>
 			<tr>
 				<td>Content:</td>
 				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>" style="width:300px; height:100px;"></td>
+				
 			</tr>
 			
 			<tr>
@@ -56,7 +60,7 @@ Fill out the information below.<br><br>
 		</table>
 	</form>
 	<% }else { %>
-	Welcome <%= s.getUser().getName() %>!<br><br>
-	<a href="?page=home">Go back to the front page</a>
+	Congratz. it done! <%= s.getUser().getName() %>!<br><br>
+	<a href="?page=Thread&thread=<%= thread.getIdentifier()%>">Go back to the front page</a>
 <%} %>
 	

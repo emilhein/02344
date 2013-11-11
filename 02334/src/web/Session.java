@@ -36,11 +36,13 @@ public class Session {
 		this.user = user;
 		
 	}
-
+	
 	public void signout() {
 
 		user = null;
 
 	}
 
+	
+	
 }

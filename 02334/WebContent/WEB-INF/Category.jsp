@@ -13,10 +13,13 @@
 %>
 <% if (parent != null) { %>
 	Go back to <a href="?page=category&category=<%= parent.getIdentifier() %>"><%= parent.getName() %></a><br><br>
-	<td><a href="?page=createThread&category=<%=current.getIdentifier() %>">Create thread</a></td>
 <% } else if (current != null) { %>
 	Go back to <a href="?page=category">Categories</a><br><br>
-<% } %>
+<% }  %>
+
+<% if (current != null && s.getUser() != null){ %>
+	<td><a href="?page=createThread&category=<%=current.getIdentifier() %>">Create thread</a></td>
+	<% } %>
 <% for (Category category : a.getConnector().getCategories(current)) { %>
 	<div class="Category">
 		<table>
