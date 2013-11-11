@@ -1,13 +1,12 @@
 package test;
 
 import static org.junit.Assert.*;
-import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 
+import database.Category;
 import database.Connector;
 import database.User;
 
@@ -53,7 +52,20 @@ public class Databse {
 		assertEquals("Animals", category1.getName());
 		assertEquals("Cats", category2.getName());
 		assertNull(category1.getParent());
-		assertEquals(category1.getIdentifier(), category2.getParent().getIdentifier());
+		assertEquals(category1.getIdentifier(), category2.getParent()
+				.getIdentifier());
+
+	}
+
+	public void createThread() throws Exception {
+		connector.createUser("createThread@test.com", "CreateThread",
+				"password", User.USER);
+		connector.createCategory("createThread", null);
+		User user = connector.getUser("CreateThread");
+		Category category = connector.getCategory(null, "createthread");
+		connector.createThread(user, category, "CreateThread", true, true);
+		database.Thread thread = connector.getThread(0);
 		
+
 	}
 }
