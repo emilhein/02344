@@ -383,6 +383,7 @@ public class Connector {
 		}
 		
 	}
+	// select query over registeret bruger i systemmet 
 	public int getCount(String what) throws Exception {
 
 		PreparedStatement statement = null;
