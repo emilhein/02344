@@ -7,9 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import database.Category;
-import database.Comment;
 import database.Connector;
-import database.Thread;
 import database.User;
 
 public class Databse {
