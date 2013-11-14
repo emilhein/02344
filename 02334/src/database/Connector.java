@@ -406,6 +406,30 @@ public class Connector {
 		
 	}
 
+	public double getAvgCommentLengt() throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT AVG(LENGTH(content)) FROM comments;");
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+
+	
 	// Functions
 	
 	public void reset() throws Exception {

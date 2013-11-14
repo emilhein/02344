@@ -123,6 +123,9 @@
 		<tr>	
 			<td>Antal comments:  <%= a.getConnector().getCount("comments") %></td>
 		</tr>
+		<tr>	
+			<td>gennemsnitslængde af comments:  <%= a.getConnector().getAvgCommentLengt() %></td>
+		</tr>
 		
 	</table>
 </div>
