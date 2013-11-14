@@ -24,7 +24,7 @@
    if (thread == null) { %>
 
 
-Fill out the information below.<br><br>
+<br><br>
 	<form method="post">
 		<input type="hidden" name="action" value="createComment">
 		<input type="hidden" name="thread" value="<%= request.getParameter("thread") %>">
