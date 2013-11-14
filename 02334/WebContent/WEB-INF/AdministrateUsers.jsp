@@ -109,20 +109,3 @@
 		<% } %>
 	</table>
 </div>
-<div class="lists">
-	<table>
-		<tr>
-			<td>Antal brugere: <%= a.getConnector().getCount("users") %></td>
-		</tr>
-		<tr>	
-			<td>Antal categories:  <%= a.getConnector().getCount("categories") %></td>
-		</tr>
-		<tr>
-			<td>Antal threads:  <%= a.getConnector().getCount("threads") %></td>
-		</tr>
-		<tr>	
-			<td>Antal comments:  <%= a.getConnector().getCount("comments") %></td>
-		</tr>
-		
-	</table>
-</div>
