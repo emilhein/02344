@@ -1,11 +1,9 @@
 package test;
 
 import static org.junit.Assert.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import database.Category;
 import database.Connector;
 import database.User;
@@ -13,6 +11,8 @@ import database.User;
 public class Database {
 	private Connector connector;
 
+	// Tests
+	
 	@Before
 	public void before() throws Exception {
 
@@ -52,48 +52,94 @@ public class Database {
 		verify(user, "test@mail2.com", "testuser2", "testpassword2", User.BLOCKED);
 		
 		// Category
+
+		try {
+			connector.getCategory(null, "testcategory");
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		
+		connector.createCategory("testcategory", null);
+		Category category = connector.getCategory(null, "testcategory");
+		
+		verify(category, "testcategory", null, 0, 0);
+
+		category.setName("testcategory2");
+		
+		verify(category, "testcategory2", null, 0, 0);
+		
+		// (Subcategory)
+		
+		try {
+			connector.getCategory(category, "testsubcategory");
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		
+		connector.createCategory("testsubcategory", category);
+		Category subcategory = connector.getCategory(category, "testsubcategory");
+
+		verify(subcategory, "testsubcategory", category, 0, 0);
+
+		subcategory.setName("testsubcategory2");
+		
+		verify(subcategory, "testsubcategory2", category, 0, 0);
+		verify(category, "testcategory2", null, 1, 0);
 		
 	}
 
+	// Functions
+	
 	private void verify(User user, String mail, String name, String password, int type) throws Exception {
 		
 		assertNotNull(user);
+		
+		int identifier = user.getIdentifier();
 
 		User[] users = new User[] {
 				user,
-				connector.getUser(user.getIdentifier()),
+				connector.getUser(identifier),
 				connector.getUser(mail),
 				connector.getUser(name)
 				};
 		
 		for (User u : users) {
 			assertNotNull(u);
+			assertEquals(identifier, u.getIdentifier());
 			assertEquals(mail, u.getMail());
 			assertEquals(name, u.getName());
 			assertTrue(u.checkPassword(password));
 			assertFalse(u.checkPassword("wrong" + password));
-			assertEquals(type, u.getType());	
+			assertEquals(type, u.getType());
 		}
 		
 	}
 
-	@Test
-	public void createCategory() throws Exception {
+	private void verify(Category category, String name, Category parent, int categoryCount, int threadCount) throws Exception {
+		
+		assertNotNull(category);
+		
+		int identifier = category.getIdentifier();
 
-		connector.createCategory("Animals", null);
-
-		database.Category category1 = connector.getCategory(null, "Animals");
-
-		connector.createCategory("Cats", category1);
-		database.Category category2 = connector.getCategory(category1, "Cats");
-		assertNotNull(category1);
-		assertNotNull(category2);
-		assertEquals("Animals", category1.getName());
-		assertEquals("Cats", category2.getName());
-		assertNull(category1.getParent());
-		assertEquals(category1.getIdentifier(), category2.getParent()
-				.getIdentifier());
-
+		Category[] categories = new Category[] {
+				category,
+				connector.getCategory(identifier),
+				connector.getCategory(parent, name)
+				};
+		
+		for (Category c : categories) {
+			assertNotNull(c);
+			assertEquals(identifier, c.getIdentifier());
+			assertEquals(name, c.getName());
+			if (parent == null) {
+				assertNull(c.getParent());
+			} else {
+				assertEquals(parent.getIdentifier(), c.getParent().getIdentifier());
+			}
+			assertEquals(categoryCount, c.getCategories().size()); // TODO: Change
+			assertEquals(threadCount, c.getThreads().size()); // TODO: Change
+		}
+		
 	}
 
 	@Test
