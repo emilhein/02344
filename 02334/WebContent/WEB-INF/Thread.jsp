@@ -32,4 +32,6 @@
 		</div>
 	<% } %>
 <% } %>
-<jsp:include page="CreateComment.jsp"/>
+<% if(!current.getClosed()){ %>
+<jsp:include page="_CreateComment.jsp"/>
+<% } %>
