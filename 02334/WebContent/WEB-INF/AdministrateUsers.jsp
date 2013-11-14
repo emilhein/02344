@@ -108,26 +108,3 @@
 			</tr>
 		<% } %>
 	</table>
-</div>
-<div class="lists">
-	<table>
-		<tr>
-			<td>Antal brugere: <%= a.getConnector().getCount("users") %></td>
-		</tr>
-		<tr>	
-			<td>Antal categories:  <%= a.getConnector().getCount("categories") %></td>
-		</tr>
-		<tr>
-			<td>Antal threads:  <%= a.getConnector().getCount("threads") %></td>
-		</tr>
-		<tr>	
-			<td>Antal comments:  <%= a.getConnector().getCount("comments") %></td>
-		</tr>
-		<tr>	
-			<td>gennemsnitslængde af comments:  <%= a.getConnector().getAvgCommentLengt() %></td>
-		</tr>
-		<tr>	
-			<td>Mest:  <%= a.getConnector().getAvgCommentLengt() %></td>
-		</tr>
-	</table>
-</div>

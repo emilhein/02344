@@ -42,6 +42,27 @@ public class Database {
 		connector.createUser("test@mail.com", "testuser", "testpassword", User.USER);
 		User user = connector.getUser("testuser");
 		
+		try {
+			user.setMail(null);
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		try {
+			user.setName(null);
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		try {
+			user.setPassword(null);
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		try {
+			user.setType(-1);
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		
 		verify(user, "test@mail.com", "testuser", "testpassword", User.USER);
 		
 		user.setMail("test@mail2.com");
@@ -62,30 +83,25 @@ public class Database {
 		connector.createCategory("testcategory", null);
 		Category category = connector.getCategory(null, "testcategory");
 		
-		verify(category, "testcategory", null, 0, 0);
-
-		category.setName("testcategory2");
-		
-		verify(category, "testcategory2", null, 0, 0);
-		
-		// (Subcategory)
+		connector.createCategory("testsubcategory", category);
+		Category subcategory = connector.getCategory(category, "testsubcategory");
 		
 		try {
-			connector.getCategory(category, "testsubcategory");
+			category.setName(null);
 			fail("Exception not thrown.");
 		} catch (Exception e) {
 		}
 		
-		connector.createCategory("testsubcategory", category);
-		Category subcategory = connector.getCategory(category, "testsubcategory");
-
+		verify(category, "testcategory", null, 1, 0);
 		verify(subcategory, "testsubcategory", category, 0, 0);
 
+		category.setName("testcategory2");
 		subcategory.setName("testsubcategory2");
+		subcategory.setParent(null);
 		
-		verify(subcategory, "testsubcategory2", category, 0, 0);
-		verify(category, "testcategory2", null, 1, 0);
-		
+		verify(category, "testcategory2", null, 0, 0);
+		verify(subcategory, "testsubcategory2", null, 0, 0);
+
 	}
 
 	// Functions
@@ -136,8 +152,10 @@ public class Database {
 			} else {
 				assertEquals(parent.getIdentifier(), c.getParent().getIdentifier());
 			}
-			assertEquals(categoryCount, c.getCategories().size()); // TODO: Change
-			assertEquals(threadCount, c.getThreads().size()); // TODO: Change
+			assertEquals(categoryCount, c.getCategoryCount());
+			assertEquals(categoryCount, c.getCategories().size());
+			assertEquals(threadCount, c.getThreadCount());
+			assertEquals(threadCount, c.getThreads().size());
 		}
 		
 	}

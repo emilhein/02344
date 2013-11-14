@@ -337,6 +337,29 @@ public class Connector {
 		
 	}
 
+	public int getCategoryCount(Category category) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT COUNT(*) FROM categories WHERE parent = ?;");
+			statement.setInt(1, category.getIdentifier());
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	public int getThreadCount(Category category) throws Exception {
 
 		PreparedStatement statement = null;
@@ -383,6 +406,7 @@ public class Connector {
 		}
 		
 	}
+	// select query over registeret bruger i systemmet 
 	public int getCount(String what) throws Exception {
 
 		PreparedStatement statement = null;
@@ -429,7 +453,37 @@ public class Connector {
 		
 	}
 
-	
+	/*
+	public database.User getMostActiveUser() throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT MAX(COUNT(content)) FROM comments NATURAL JOIN users WHERE identifier;");
+			statement.setString(1, mailOrName);
+			statement.setString(2, mailOrName);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find that user:");
+			}
+			
+			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	*/
 	// Functions
 	
 	public void reset() throws Exception {

@@ -62,7 +62,8 @@
 	border:2px solid black;
 
 }	
-#mainDesign {
+#Content {
+	  margin: 0 auto;
 	
 }
 .lists {

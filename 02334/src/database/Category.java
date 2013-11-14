@@ -47,6 +47,10 @@ public class Category {
 		
 		return connector.getThreads(this);
 	}
+	public int getCategoryCount() throws Exception {
+		
+		return connector.getCategoryCount(this);
+	}
 	public int getThreadCount() throws Exception {
 		
 		return connector.getThreadCount(this);

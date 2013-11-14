@@ -68,7 +68,7 @@
 				</form>
 			</div>
 		<% } %>
-		<div id="contect">
+		<div id="content">
 			<jsp:include page="<%= p.getPath() %>"/>
 		</div>
 	</body>
