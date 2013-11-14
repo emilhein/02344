@@ -5,5 +5,5 @@
 Welcome!
 
 <img src="images.jpeg"
-	style="float: center; margin: 10px 10px 15px 15px; cursor: pointer; cursor: hand; border: 0"
+	style="float: center; margin: 10px 10px 15px 15px; cursor: hand; border: 0"
 	width="300" height="300">
