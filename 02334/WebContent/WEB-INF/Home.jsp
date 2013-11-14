@@ -19,14 +19,9 @@ Welcome!
 		<tr>	
 			<td>Antal comments:  <%= a.getConnector().getCount("comments") %></td>
 		</tr>
-		<tr>	
-			<td>gennemsnitslængde af comments:  <%= a.getConnector().getAvgCommentLengt() %></td>
-		</tr>
-		<tr>	
-			<td>Mest aktive brugere: (ikke lavet endnu..)</td>
-		</tr>
 		<%} %>
 	</table>
+	
 <img src="images.jpeg"
-	style="float: center; margin: 50px 50px 50px 50px; cursor: hand; border: 0"
+	style="float: align = center; margin: 50px 50px 50px 50px; cursor: hand; border: 0"
 	width="500" height="300">
