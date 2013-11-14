@@ -126,6 +126,8 @@
 		<tr>	
 			<td>gennemsnitslængde af comments:  <%= a.getConnector().getAvgCommentLengt() %></td>
 		</tr>
-		
+		<tr>	
+			<td>Mest:  <%= a.getConnector().getAvgCommentLengt() %></td>
+		</tr>
 	</table>
 </div>
