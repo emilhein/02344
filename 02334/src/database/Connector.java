@@ -337,6 +337,29 @@ public class Connector {
 		
 	}
 
+	public int getCategoryCount(Category category) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT COUNT(*) FROM categories WHERE parent = ?;");
+			statement.setInt(1, category.getIdentifier());
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	public int getThreadCount(Category category) throws Exception {
 
 		PreparedStatement statement = null;
