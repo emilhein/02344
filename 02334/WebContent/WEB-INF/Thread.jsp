@@ -28,7 +28,8 @@
 					<td><%= comment.getUser().getName() %></td>
 					<td><%= comment.getContent() %></td>
 				</tr>
-			</table>	
+			</table>	 
 		</div>
 	<% } %>
 <% } %>
+<jsp:include page="CreateComment.jsp"/>

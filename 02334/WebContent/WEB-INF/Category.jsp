@@ -19,6 +19,7 @@
 
 <% if (current != null && s.getUser() != null){ %>
 	<td><a href="?page=createThread&category=<%=current.getIdentifier() %>">Create thread</a></td>
+	
 	<% } %>
 <% for (Category category : a.getConnector().getCategories(current)) { %>
 	<div class="Category">

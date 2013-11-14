@@ -6,18 +6,13 @@
 <%
 	//createThread(User user, Category category, String name, boolean sticky, boolean closed
 	//createComment(User user, Thread thread, String content)
-	
+
 	String message = null;
 	database.Thread thread = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-			database.Category category = a.getConnector().getCategory(Integer.parseInt(request.getParameter("category")));
-			
-						
-			a.getConnector().createThread(s.getUser(), category,request.getParameter("title"), false, false );
-			
-			
-			thread = a.getConnector().getThread(category, request.getParameter("title"));
+		
+			thread = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
 			a.getConnector().createComment(s.getUser(), thread, request.getParameter("content"));
 			
 	} catch (Exception e) {
@@ -31,22 +26,19 @@
 
 Fill out the information below.<br><br>
 	<form method="post">
-		<input type="hidden" name="action" value="createThread">
-		<input type="hidden" name="category" value="<%= request.getParameter("category") %>">
+		<input type="hidden" name="action" value="createComment">
+		<input type="hidden" name="thread" value="<%= request.getParameter("thread") %>">
 		<table>
+
 			<tr>
-				<td>Title:</td>
-				<td><input type="text" name="title" value="<%= request.getParameter("title") != null ? request.getParameter("title") : "" %>"></td>
-			</tr>
-			<tr>
-				<td>Content:</td>
+				<td>Your comment:</td>
 				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>" style="width:300px; height:100px;"></td>
 				
 			</tr>
 			
 			<tr>
 				<td><br></td>
-				<td><br><input type="submit" value="Create"></td>
+				<td><br><input type="submit" value="Submit"></td>
 				<td><br><span style="color:red"><%= message != null ? message : "" %></span></td>
 			</tr>
 			<tr>
@@ -56,7 +48,7 @@ Fill out the information below.<br><br>
 		</table>
 	</form>
 	<% }else { %>
-	Congratz. it done! <%= s.getUser().getName() %>!<br><br>
-	<a href="?page=Thread&thread=<%= thread.getIdentifier()%>">Go back to the front page</a>
+	Thanks for keeping the debate alive <%= s.getUser().getName() %>!<br><br>
+	<a href="?page=Thread&thread=<%= thread.getIdentifier()%>">Go back to the thread</a>
 <%} %>
 	
