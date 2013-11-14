@@ -159,10 +159,6 @@ public class Connector {
 		
 	}
 	
-
-	
-	
-	
 	public User getUser(int identifier) throws Exception {
 
 		PreparedStatement statement = null;
@@ -341,6 +337,53 @@ public class Connector {
 		
 	}
 
+	public int getThreadCount(Category category) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT COUNT(*) FROM threads WHERE category = ?;");
+			statement.setInt(1, category.getIdentifier());
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getCommentCount(Thread thread) throws Exception {
+		
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT COUNT(*) FROM comments WHERE thread = ?;");
+			statement.setInt(1, thread.getIdentifier());
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	
 	// Functions
 	
 	public void reset() throws Exception {
@@ -615,67 +658,5 @@ public class Connector {
 		}
 		
 	}
-public int getCommentsNumber(Thread thread) throws Exception {
-		
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		int count = 0;
-		try {
 
-			statement = connection.prepareStatement("SELECT count(*) FROM comments WHERE thread = ?;"); // TODO: Sort by identifier.
-			statement.setInt(1, thread.getIdentifier());
-			resultSet = statement.executeQuery();
-
-			while (resultSet.next()) {
-				count = resultSet.getInt(1);
-			}
-			
-			
-			
-			return count;
-			
-		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception ex) {
-			}
-			try {
-				statement.close();
-			} catch (Exception ex) {
-			}
-		}
-		
-	}
-public int getThreadsNumber(Category category) throws Exception {
-	
-	PreparedStatement statement = null;
-	ResultSet resultSet = null;
-	int count = 0;
-	try {
-
-		statement = connection.prepareStatement("SELECT count(*) FROM threads WHERE category = ?;"); // TODO: Sort by changed.
-		statement.setInt(1, category == null ? 0 : category.getIdentifier());
-		resultSet = statement.executeQuery();
-		
-
-		while (resultSet.next()) {
-			count = resultSet.getInt(1);
-		}
-		
-		return count;
-		
-	} finally {
-		try {
-			resultSet.close();
-		} catch (Exception ex) {
-		}
-		try {
-			statement.close();
-		} catch (Exception ex) {
-		}
-	}
-	
-}
-	
-	
 }
