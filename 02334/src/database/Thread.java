@@ -63,6 +63,10 @@ public class Thread {
 		
 		return connector.getComments(this);
 	}
+	public int getCommentCount() throws Exception {
+		
+		return connector.getCommentCount(this);
+	}
 	
 	public void setCategory(Category category) throws Exception {
 
