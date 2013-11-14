@@ -28,7 +28,7 @@
 		<table>
 			<tr>
 				<td><a href="?page=category&category=<%= category.getIdentifier() %>"><%= category.getName() %></a></td>
-				<td>Number of Threads: <%=a.getConnector().getThreadsNumber(category) %></td>
+				<td>Number of Threads: <%=a.getConnector().getThreadCount(category) %></td>
 			</tr>
 		</table>
 	</div>
@@ -41,7 +41,7 @@
 				<tr>
 					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
 					
-					<td>Number of Comments: <%=a.getConnector().getCommentsNumber(thread) %></td>
+					<td>Number of Comments: <%=a.getConnector().getCommentCount(thread) %></td>
 				</tr>
 			</table>	
 		</div>

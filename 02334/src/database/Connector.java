@@ -383,7 +383,29 @@ public class Connector {
 		}
 		
 	}
-	
+	public int getCount(String what) throws Exception {
+
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement("SELECT COUNT(*) FROM " + what +";");
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+
 	// Functions
 	
 	public void reset() throws Exception {
