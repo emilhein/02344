@@ -10,32 +10,71 @@ import database.Category;
 import database.Connector;
 import database.User;
 
-public class Databse {
+public class Database {
 	private Connector connector;
 
 	@Before
-	public void createConnector() throws Exception {
+	public void before() throws Exception {
 
-		connector = new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115",
-				"s123115", "F5iCtVPs4rtHu4oM");
+		connector = new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM");
 		connector.reset();
+		
 	}
 
 	@After
-	public void closeConnector() {
+	public void after() {
+		
 		connector.close();
+	
 	}
 
 	@Test
-	public void createUser() throws Exception {
-		connector.createUser("unit@test.com", "UNIT", "bruger123", User.USER);
-		User user1 = connector.getUser("UNIT");
-		assertNotNull(user1);
-		assertEquals("UNIT", user1.getName());
-		assertEquals(User.USER, user1.getType());
-		assertEquals("unit@test.com", user1.getMail());
-		assertTrue(user1.checkPassword("bruger123"));
-		assertFalse(user1.checkPassword("bruger12345"));
+	public void test() throws Exception {
+		
+		// User
+		
+		try {
+			connector.getUser("testuser");
+			fail("Exception not thrown.");
+		} catch (Exception e) {
+		}
+		
+		connector.createUser("test@mail.com", "testuser", "testpassword", User.USER);
+		User user = connector.getUser("testuser");
+		
+		verify(user, "test@mail.com", "testuser", "testpassword", User.USER);
+		
+		user.setMail("test@mail2.com");
+		user.setName("testuser2");
+		user.setPassword("testpassword2");
+		user.setType(User.BLOCKED);
+		
+		verify(user, "test@mail2.com", "testuser2", "testpassword2", User.BLOCKED);
+		
+		// Category
+		
+	}
+
+	private void verify(User user, String mail, String name, String password, int type) throws Exception {
+		
+		assertNotNull(user);
+
+		User[] users = new User[] {
+				user,
+				connector.getUser(user.getIdentifier()),
+				connector.getUser(mail),
+				connector.getUser(name)
+				};
+		
+		for (User u : users) {
+			assertNotNull(u);
+			assertEquals(mail, u.getMail());
+			assertEquals(name, u.getName());
+			assertTrue(u.checkPassword(password));
+			assertFalse(u.checkPassword("wrong" + password));
+			assertEquals(type, u.getType());	
+		}
+		
 	}
 
 	@Test
