@@ -22,5 +22,5 @@ Welcome!
 		<%} %>
 	</table>
 <img src="images.jpeg"
-	style="float: center; margin: 10px 10px 15px 15px; cursor: hand; border: 0"
-	width="300" height="300">
+	style="float: center; margin: 50px 50px 50px 50px; cursor: hand; border: 0"
+	width="500" height="300">
