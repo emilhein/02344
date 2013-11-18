@@ -459,7 +459,7 @@ public class Connector {
 		
 	}
 
-	public double getAvgCommentLengt() throws Exception {
+	public int getAverageCommentLength() throws Exception {
 
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
