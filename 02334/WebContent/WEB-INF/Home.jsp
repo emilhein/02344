@@ -6,18 +6,18 @@ Welcome!
 
 <table>
 		<tr>
-			<td>Antal brugere: <%= a.getConnector().getCount("users") %></td>
+			<td>Antal brugere: <%= a.getConnector().getUserCount() %></td>
 		</tr>
 		<%if (s.getUser()!=null){
 		%>
 		<tr>	
-			<td>Antal categories:  <%= a.getConnector().getCount("categories") %></td>
+			<td>Antal categories:  <%= a.getConnector().getCategoryCount() %></td>
 		</tr>
 		<tr>
-			<td>Antal threads:  <%= a.getConnector().getCount("threads") %></td>
+			<td>Antal threads:  <%= a.getConnector().getThreadCount() %></td>
 		</tr>
 		<tr>	
-			<td>Antal comments:  <%= a.getConnector().getCount("comments") %></td>
+			<td>Antal comments:  <%= a.getConnector().getCommentCount() %></td>
 		</tr>
 		<%} %>
 	</table>

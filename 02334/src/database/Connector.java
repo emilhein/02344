@@ -365,6 +365,95 @@ public class Connector {
 		}
 		
 	}
+
+	public int getUserCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM users;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getCategoryCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM categories;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getThreadCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM threads;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getCommentCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM comments;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	public int getCategoryCount(Category category) throws Exception {
 
@@ -435,38 +524,15 @@ public class Connector {
 		}
 		
 	}
-	// select query over registeret bruger i systemmet 
-	public int getCount(String what) throws Exception {
-
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			statement = connection.prepareStatement("SELECT COUNT(*) FROM " + what +";");
-			resultSet = statement.executeQuery();
-			resultSet.next();
-			return resultSet.getInt(1);			
-		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception ex) {
-			}
-			try {
-				statement.close();
-			} catch (Exception ex) {
-			}
-		}
-		
-	}
-
+	
 	public int getAverageCommentLength() throws Exception {
 
-		PreparedStatement statement = null;
+		Statement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
-			statement = connection.prepareStatement("SELECT AVG(LENGTH(content)) FROM comments;");
-			resultSet = statement.executeQuery();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT AVG(LENGTH(content)) FROM comments;");
 			resultSet.next();
 			return resultSet.getInt(1);			
 		} finally {
