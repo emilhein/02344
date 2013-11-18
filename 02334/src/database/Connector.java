@@ -12,7 +12,7 @@ public class Connector {
 	
 	private Connection connection;
 	
-	// New0
+	// New
 	
 	public Connector(String server, int port, String database, String username, String password) throws Exception {
 		
