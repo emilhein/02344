@@ -336,7 +336,125 @@ public class Connector {
 		}
 		
 	}
+	public Comment getComment(int identifier) throws Exception {
 
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM comments WHERE identifier = ?;");
+			statement.setInt(1, identifier);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a comment where identifier is '" + identifier + "'.");
+			}
+			
+			return new Comment(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("thread"), resultSet.getString("content"), resultSet.getTimestamp("changed"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+
+	public int getUserCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM users;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getCategoryCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM categories;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getThreadCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM threads;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	public int getCommentCount() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT COUNT(*) FROM comments;");
+			resultSet.next();
+			return resultSet.getInt(1);
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	
 	public int getCategoryCount(Category category) throws Exception {
 
 		PreparedStatement statement = null;
@@ -406,38 +524,15 @@ public class Connector {
 		}
 		
 	}
-	// select query over registeret bruger i systemmet 
-	public int getCount(String what) throws Exception {
+	
+	public int getAverageCommentLength() throws Exception {
 
-		PreparedStatement statement = null;
+		Statement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
-			statement = connection.prepareStatement("SELECT COUNT(*) FROM " + what +";");
-			resultSet = statement.executeQuery();
-			resultSet.next();
-			return resultSet.getInt(1);			
-		} finally {
-			try {
-				resultSet.close();
-			} catch (Exception ex) {
-			}
-			try {
-				statement.close();
-			} catch (Exception ex) {
-			}
-		}
-		
-	}
-
-	public double getAvgCommentLengt() throws Exception {
-
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		
-		try {
-			statement = connection.prepareStatement("SELECT AVG(LENGTH(content)) FROM comments;");
-			resultSet = statement.executeQuery();
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("SELECT AVG(LENGTH(content)) FROM comments;");
 			resultSet.next();
 			return resultSet.getInt(1);			
 		} finally {
@@ -635,9 +730,6 @@ public class Connector {
 			} catch (Exception ex) {
 			}
 		}
-		
-	}
-	public void createThread(database.User user){
 		
 	}
 	public void createThread(User user, Category category, String name, boolean sticky, boolean closed) throws Exception {
