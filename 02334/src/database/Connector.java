@@ -12,7 +12,7 @@ public class Connector {
 	
 	private Connection connection;
 	
-	// New
+	// New0
 	
 	public Connector(String server, int port, String database, String username, String password) throws Exception {
 		
@@ -336,7 +336,36 @@ public class Connector {
 		}
 		
 	}
+	public Comment getComment(int identifier) throws Exception {
 
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+
+			statement = connection.prepareStatement("SELECT * FROM comments WHERE identifier = ?;");
+			statement.setInt(1, identifier);
+			resultSet = statement.executeQuery();
+
+			if (!resultSet.next()) {
+				throw new Exception("Cannot find a comment where identifier is '" + identifier + "'.");
+			}
+			
+			return new Comment(this, resultSet.getInt("identifier"), resultSet.getInt("user"), resultSet.getInt("thread"), resultSet.getString("content"), resultSet.getTimestamp("changed"));
+			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
+	
 	public int getCategoryCount(Category category) throws Exception {
 
 		PreparedStatement statement = null;
@@ -635,9 +664,6 @@ public class Connector {
 			} catch (Exception ex) {
 			}
 		}
-		
-	}
-	public void createThread(database.User user){
 		
 	}
 	public void createThread(User user, Category category, String name, boolean sticky, boolean closed) throws Exception {
