@@ -453,23 +453,23 @@ public class Connector {
 		
 	}
 
-	/*
-	public database.User getMostActiveUser() throws Exception {
+	
+	public List<CommentsAndUser> getUserActivity() throws Exception {
 
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
-			statement = connection.prepareStatement("SELECT MAX(COUNT(content)) FROM comments NATURAL JOIN users WHERE identifier;");
-			statement.setString(1, mailOrName);
-			statement.setString(2, mailOrName);
-			resultSet = statement.executeQuery();
 
-			if (!resultSet.next()) {
-				throw new Exception("Cannot find that user:");
+			statement = connection.prepareStatement("SELECT users.identifier, users.mail, users.name, users.password, users.type, comments.SUM(identifier) FROM users NATURAL JOIN comments GROUP BY users.identifier;");
+			resultSet = statement.executeQuery();
+			List<CommentsAndUser> list = new ArrayList<CommentsAndUser>();
+
+			while (resultSet.next()) {
+				list.add(new CommentsAndUser(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"),resultSet.getInt("comments")));
 			}
 			
-			return new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"));
+			return list;
 			
 		} finally {
 			try {
@@ -483,7 +483,7 @@ public class Connector {
 		}
 		
 	}
-	*/
+	
 	// Functions
 	
 	public void reset() throws Exception {
