@@ -4,19 +4,20 @@
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
+	s.setup(a.getConnector());
 	String message = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
 			if (request.getParameter("action").equalsIgnoreCase("signout")) {
 				s.signout();
 			} else if (request.getParameter("action").equalsIgnoreCase("signin")) {
-				s.signin(a, request.getParameter("mailOrName"), request.getParameter("password"));
+				s.signin(request.getParameter("mailOrName"), request.getParameter("password"));
 			}
 		} catch (Exception e) {
 			message = e.getMessage();
 		}
 	}
-	Page p = a.getPage(request.getParameter("page"), s.getUser());
+	Page p = a.getPage(request.getParameter("page"), s);
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

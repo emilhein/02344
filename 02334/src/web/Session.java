@@ -1,29 +1,41 @@
 package web;
 
+import database.Connector;
 import database.Tools;
 import database.User;
 
 public class Session {
 	
-	private User user;
-
+	private Connector connector;
+	private int user = -1;
+	
 	// Properties
 
-	public User getUser() {
+	public User getUser() throws Exception {
 
-		return user;
+		if (user == -1) {
+			return null;
+		}
+		
+		return connector.getUser(user);
 	}
 
 	// Functions
 
-	public void signin(Application application, String mailOrName, String password) throws Exception {
+	public void setup(Connector connector) {
+		
+		this.connector = connector;
+		
+	}
+	
+	public void signin(String mailOrName, String password) throws Exception {
 
 		signout();
 
 		User user;
 		
 		Tools.validateUserPassword(password);
-		user = application.getConnector().getUser(mailOrName);
+		user = connector.getUser(mailOrName);
 
 		if (!user.checkPassword(password)) {
 			throw new Exception("Wrong password.");
@@ -33,16 +45,14 @@ public class Session {
 			throw new Exception("You are currently blocked.");
 		}
 		
-		this.user = user;
+		this.user = user.getIdentifier();
 		
 	}
 	
 	public void signout() {
 
-		user = null;
+		user = -1;
 
 	}
-
-	
 	
 }

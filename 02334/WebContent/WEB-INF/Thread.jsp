@@ -35,6 +35,6 @@
 		</div>
 	<% } %>
 <% } %>
-<% if(!current.getClosed()){ %>
+<% if(!current.getClosed() && s.getUser() != null){ %>
 <jsp:include page="_CreateComment.jsp"/>
 <% } %>

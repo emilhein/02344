@@ -646,6 +646,7 @@ public class Connector {
 														   "FOREIGN KEY (user) REFERENCES users(identifier), " +
 														   "FOREIGN KEY (thread) REFERENCES threads(identifier));");
 			
+			
 			// Insert
 			
 			createUser("administrator@test.com", "Administrator", "administrator123", User.ADMINISTRATOR);
@@ -680,6 +681,12 @@ public class Connector {
 			createComment(getUser("Moderator"), getThread(2), "Tekst i fremhævet tråd.");
 			createComment(getUser("Bruger"), getThread(3), "Tekst i lukket tråd.");
 			createComment(getUser("Blokeret"), getThread(4), "Tekst i tråd.");
+			
+			statement.executeUpdate("CREATE TRIGGER blockuser AFTER INSERT ON comments " +
+					"FOR EACH ROW UPDATE users SET type = 3 WHERE identifier = NEW.user AND EXISTS " +
+					"(SELECT * FROM (SELECT TIMEDIFF(MAX(changed), MIN(changed)) AS timedifference FROM " +
+					"(SELECT * FROM comments WHERE user = NEW.user ORDER BY changed DESC LIMIT 10) AS newest HAVING COUNT(*) >= 10) AS difference WHERE timedifference < '00:01:00');");
+
 			
 		} finally {
 			try {

@@ -12,7 +12,7 @@ public class Main {
 		try {
 			
 			connector = new Connector("sql-lab1.cc.dtu.dk", 3306, "s123115", "s123115", "F5iCtVPs4rtHu4oM");
-			//connector.reset();
+			connector.reset();
 
 			System.out.println();
 			System.out.println("Administrators:");

@@ -2,6 +2,7 @@ package web;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import database.Connector;
 import database.User;
 
@@ -35,12 +36,17 @@ public class Application {
 	
 	// Functions
 	
-	public Page getPage(String name, User user) {
+	public Page getPage(String name, Session session) throws Exception {
+		
+		if (session.getUser() != null && session.getUser().getType() == User.BLOCKED) {
+			session.signout();
+			return pages.get(0);
+		}
 		
 		if (name != null) {
 			for (Page page : pages) {
 				if (name.equalsIgnoreCase(page.getFilename())) {
-					if (page.checkAccess(user)) {
+					if (page.checkAccess(session.getUser())) {
 						return page;
 					}
 					break;
