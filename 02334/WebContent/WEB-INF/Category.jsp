@@ -30,6 +30,7 @@
 				<td><a href="?page=category&category=<%= category.getIdentifier() %>"><%= category.getName() %></a></td>
 				<td>Number of Threads: <%=a.getConnector().getThreadCount(category) %></td>
 			</tr>
+			
 		</table>
 	</div>
 <% } %>

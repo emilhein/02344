@@ -20,17 +20,25 @@ Welcome!
 		<tr>	
 			<td>Antal comments:  <%= a.getConnector().getCommentCount() %></td>
 		</tr>
+			<tr>
+				<th>
+				Username
+				</th>
+				<th>
+				Comments
+				</th>
 			
-			
-		<tr>
+			</tr>
 			<% for (CommentsAndUser user : a.getConnector().getUserActivity()) { %>
+		<tr>
 			
-			<td>username: <%= user.getName() %></td>
-			<td>username: <%= user.getComments() %></td>
-			<td></td>
-		<% }} %>
+			
+			<td><%= user.getUser().getName() %></td>
+			<td><%= user.getComments() %></td>
+			
+		
 		</tr>
-				
+		<% }} %>		
 	</table>
 	
 		

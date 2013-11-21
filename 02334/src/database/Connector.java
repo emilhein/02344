@@ -556,12 +556,13 @@ public class Connector {
 		
 		try {
 
-			statement = connection.prepareStatement("SELECT users.identifier, users.mail, users.name, users.password, users.type, comments.SUM(identifier) FROM users NATURAL JOIN comments GROUP BY users.identifier;");
+			statement = connection.prepareStatement("select users.identifier, users.mail, users.name, users.password, users.type, count(users.identifier) from users,comments where users.identifier = comments.user group by users.identifier order by count(users.identifier) desc limit 5;");
 			resultSet = statement.executeQuery();
 			List<CommentsAndUser> list = new ArrayList<CommentsAndUser>();
 
 			while (resultSet.next()) {
-				list.add(new CommentsAndUser(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type"),resultSet.getInt("comments")));
+				list.add(new CommentsAndUser(new User(this, resultSet.getInt("identifier"), resultSet.getString("mail"), resultSet.getString("name"), resultSet.getBytes("password"), resultSet.getInt("type")), resultSet.getInt(6)));
+
 			}
 			
 			return list;
@@ -620,7 +621,7 @@ public class Connector {
 			
 			statement.executeUpdate("CREATE TABLE categories (identifier INTEGER NOT NULL AUTO_INCREMENT, " +
 															 "name VARCHAR(100) NOT NULL, " +
-															 "parent INTEGER NOT NULL, " +
+															 "parent INTEGER, " +
 															 "PRIMARY KEY (identifier), " +
 															 "UNIQUE (name, parent), " +
 															 "FOREIGN KEY (parent) REFERENCES categories(identifier));");

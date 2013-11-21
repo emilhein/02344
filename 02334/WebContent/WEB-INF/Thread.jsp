@@ -28,6 +28,9 @@
 					<td><%= comment.getUser().getName() %></td>
 					<td><%= comment.getContent() %></td>
 				</tr>
+				<tr>
+					<td><%= comment.getChanged() %>	</td>
+				</tr>
 			</table>	 
 		</div>
 	<% } %>
