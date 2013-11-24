@@ -7,18 +7,25 @@
 Welcome!
 
 <table>
+		
 		<tr>
-			<td>Antal brugere: <%= a.getConnector().getUserCount() %></td>
+			<td>Number of brugere: <%= a.getConnector().getUserCount() %></td>
 		</tr>
 		<%if (s.getUser()!=null){%>
 		<tr>	
-			<td>Antal categories:  <%= a.getConnector().getCategoryCount() %></td>
+			<td>Number of categories:  <%= a.getConnector().getCategoryCount() %></td>
 		</tr>
 		<tr>
-			<td>Antal threads:  <%= a.getConnector().getThreadCount() %></td>
+			<td>Number of threads:  <%= a.getConnector().getThreadCount() %></td>
 		</tr>
 		<tr>	
-			<td>Antal comments:  <%= a.getConnector().getCommentCount() %></td>
+			<td>Number of comments:  <%= a.getConnector().getCommentCount() %></td>
+		</tr>
+		<tr>	
+			<td>Total amount of characters in comments:  <%= a.getConnector().getTotalCommentLength() %></td>
+		</tr>
+		<tr>	
+			<td>Average amount of characters in comments:  <%= a.getConnector().getAverageCommentLength() %></td>
 		</tr>
 			<tr>
 				<th>

@@ -548,6 +548,28 @@ public class Connector {
 		
 	}
 
+	public int getTotalCommentLength() throws Exception {
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery("select sum(char_length(content)) from comments;");
+			resultSet.next();
+			return resultSet.getInt(1);			
+		} finally {
+			try {
+				resultSet.close();
+			} catch (Exception ex) {
+			}
+			try {
+				statement.close();
+			} catch (Exception ex) {
+			}
+		}
+		
+	}
 	
 	public List<CommentsAndUser> getUserActivity() throws Exception {
 
