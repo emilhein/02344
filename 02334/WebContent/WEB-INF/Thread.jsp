@@ -20,16 +20,16 @@
 	Go back to <a href="?page=category&category=<%= parent.getIdentifier() %>"><%= parent.getName() %></a><br><br>
 <% } %>
 <% if (current != null) { %>
-	<%= current.getName() %><br><br>
+	<b><%= current.getName() %></b>
 	<% for (database.Comment comment : current.getComments()) { %>
 		<div class="Comment">
 			<table>
 				<tr>
-					<td><%= comment.getUser().getName() %></td>
-					<td><%= comment.getContent() %></td>
+					<td>Written by: <%= comment.getUser().getName() %></td>
+					<td>content <%= comment.getContent() %></td>
 				</tr>
 				<tr>
-					<td><p><%= comment.getChanged() %>	</p></td>
+					<td><h5>created <%= comment.getChanged() %>	</h5></td>
 				</tr>
 			</table>	 
 		</div>

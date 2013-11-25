@@ -13,6 +13,7 @@
 	} catch (Exception e) {
 	}
 %>
+ <H2>Welcome to the basic forum design.</H2>
 <% if (parent != null) { %>
 	Go back to <a href="?page=category&category=<%= parent.getIdentifier() %>"><%= parent.getName() %></a><br><br>
 <% } else if (current != null) { %>
@@ -23,12 +24,18 @@
 	<td><a href="?page=createThread&category=<%=current.getIdentifier() %>">Create thread</a></td>
 	
 	<% } %>
+	
 <% for (Category category : a.getConnector().getCategories(current)) { %>
 	<div class="Category">
 		<table>
 			<tr>
-				<td><a href="?page=category&category=<%= category.getIdentifier() %>"><%= category.getName() %></a></td>
+				<td><b><a href="?page=category&category=<%= category.getIdentifier() %>"><%= category.getName() %></a></b></td>
+			</tr>
+			<tr>
 				<td>Number of Threads: <%=a.getConnector().getThreadCount(category) %></td>
+			</tr>
+			<tr>
+				<td>Number of subcategories: <%=a.getConnector().getCategoryCount(category) %></td>	
 			</tr>
 			
 		</table>
@@ -41,9 +48,11 @@
 			<table>
 				<tr>
 					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
-					
-					<td>Number of Comments: <%=a.getConnector().getCommentCount(thread) %></td>
 				</tr>
+				<tr>
+					<td>Number of comments: <%=a.getConnector().getCommentCount(thread) %></td>
+				</tr>
+				
 			</table>	
 		</div>
 	<% } %>
