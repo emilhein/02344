@@ -29,7 +29,7 @@
 					<td><%= comment.getContent() %></td>
 				</tr>
 				<tr>
-					<td><%= comment.getChanged() %>	</td>
+					<td><p><%= comment.getChanged() %>	</p></td>
 				</tr>
 			</table>	 
 		</div>
