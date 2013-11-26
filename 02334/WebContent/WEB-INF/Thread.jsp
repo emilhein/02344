@@ -7,7 +7,7 @@
 	Category parent = null;
 	String message = null;
 	try {
-		current = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
+		current q= a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
 		parent = current.getCategory();
 	} catch (Exception e) {
 		message = e.getMessage();
@@ -28,7 +28,6 @@
 				<tr>
 					<td>Written by: <%= comment.getUser().getName() %></td>
 					<td>content <%= comment.getContent() %></td>
-					<td>Identifier <%= comment.getIdentifier() %></td>
 				</tr>
 				<tr>
 					<td><h5>created <%= comment.getChanged() %>	</h5></td>
