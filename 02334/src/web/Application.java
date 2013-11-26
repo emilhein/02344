@@ -22,6 +22,7 @@ public class Application {
 		pages.add(new Page("Administrate users", "AdministrateUsers", User.MODERATOR));
 		pages.add(new Page("Category", "Category"));
 		pages.add(new Page("Create thread", "CreateThread", User.USER));
+		pages.add(new Page("Change comment", "ChangeComment", User.USER));
 		pages.add(new Page("Thread", "Thread"));
 
 		

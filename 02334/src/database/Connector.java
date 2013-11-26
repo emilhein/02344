@@ -863,7 +863,7 @@ public class Connector {
 		}
 		
 	}
-	protected void updateComment(int identifier, String content) throws Exception {
+	public void updateComment(int identifier, String content) throws Exception {
 		
 		PreparedStatement statement = null;
 		

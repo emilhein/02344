@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@ page import="database.Category, database.Thread" %>
+<%@ page import="database.Category, database.Thread, database.Comment" %>
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
@@ -34,8 +34,7 @@
 				</tr>
 			<%if (comment.getUser().getName().equals(s.getUser().getName())) { %>
 			<tr>		
-		 		<td>Written by you. Change here</td>
-		 		<jsp:include page="_ChangeComment.jsp"/>
+		 		<td><a href="?page=_changecomment">edit comment2</a></td>
 			</tr>
 			<% } %>
 			</table>	 

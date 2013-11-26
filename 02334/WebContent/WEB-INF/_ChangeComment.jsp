@@ -1,37 +1,36 @@
 <%@page import="database.Category"%>
 <%@page import="database.Connector"%>
+<%@page import="database.Thread"%>
+<%@page import="database.Comment"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <jsp:useBean id="a" class="web.Application" scope="application"/>
 <jsp:useBean id="s" class="web.Session" scope="session"/>
 <%
-	//createThread(User user, Category category, String name, boolean sticky, boolean closed
-	//createComment(User user, Thread thread, String content)
-
 	String message = null;
-	database.Thread thread = null;
+	database.Comment comment = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
 		
-			thread = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
-			a.getConnector().updateComment(thread.getIdentifier(), request.getParameter("content"));
+			comment = a.getConnector().getComment(Integer.parseInt(request.getParameter("comment")));
+			a.getConnector().updateComment(comment.getIdentifier(), request.getParameter("content"));
 			
 	} catch (Exception e) {
 		message = e.getMessage();
-		thread = null;
+		comment = null;
 	}
 	}
 
-   if (thread == null) { %>
+   if (comment == null) { %>
 
 
 <br><br>
 	<form method="post">
-		<input type="hidden" name="action" value="updateComment">
-		<input type="hidden" name="thread" value="<%= request.getParameter("thread") %>">
+		<input type="hidden" name="action" value="changecomment">
+		<input type="hidden" name="comment" value="<%= request.getParameter("comment") %>">
 		<table>
 
 			<tr>
-				<td>Your comment:</td>
+				<td>Your new comment:</td>
 				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>" style="width:300px; height:100px;"></td>
 				
 			</tr>
@@ -48,7 +47,6 @@
 		</table>
 	</form>
 	<% }else { %>
-	Thanks for keeping the debate alive <%= s.getUser().getName() %>!<br><br>
-	<a href="?page=Thread&thread=<%= thread.getIdentifier()%>">Go back to the thread</a>
+	<a href="?page=Thread&thread=<%= comment.getThread().getIdentifier()%>">Go back to the thread</a>
 <%} %>
 	
