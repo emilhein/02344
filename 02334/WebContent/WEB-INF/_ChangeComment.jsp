@@ -12,21 +12,21 @@
 	
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-	
-			comment = a.getConnector().getComment(Integer.parseInt(request.getParameter("comment")));
-			a.getConnector().updateComment(request.getParameter("content"),comment.getIdentifier());
-			
-	} catch (Exception e) {
-		message = e.getMessage();
-		comment = null;
-	}
+			if (request.getParameter("action").equalsIgnoreCase("changecomment" + request.getParameter("comment"))) {
+				comment = a.getConnector().getComment(Integer.parseInt(request.getParameter("comment")));
+				comment.setContent(request.getParameter("content"));
+			}
+		} catch (Exception e) {
+			message = e.getMessage();
+			comment = null;
+		}
 	} %>
 
-  
+  <%= "Test: " + request.getParameter("comment") + ", " + request.getParameter("content") %>
 
 <br><br>
 	<form method="post">
-		<input type="hidden" name="action" value="changecomment">
+		<input type="hidden" name="action" value="changecomment<%= request.getParameter("comment") %>">
 		<input type="hidden" name="comment" value="<%= request.getParameter("comment") %>">
 		<table>
 

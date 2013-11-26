@@ -35,7 +35,9 @@
 				</tr>
 			<%if (s.getUser() != null && comment.getUser().getIdentifier() == s.getUser().getIdentifier()) { %>
 			<tr>
-		 		<jsp:include page="_ChangeComment.jsp"/>
+		 		<jsp:include page="_ChangeComment.jsp">
+		 			<jsp:param name="comment" value="<%= comment.getIdentifier() %>"/>
+		 		</jsp:include>
 			</tr>
 			<% } %>
 			</table>	 

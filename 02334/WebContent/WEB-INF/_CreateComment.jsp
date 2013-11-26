@@ -11,14 +11,14 @@
 	database.Thread thread = null;
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-		
-			thread = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
-			a.getConnector().createComment(s.getUser(), thread, request.getParameter("content"));
-			
-	} catch (Exception e) {
-		message = e.getMessage();
-		thread = null;
-	}
+			if (request.getParameter("action").equalsIgnoreCase("createComment")) {
+				thread = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
+				a.getConnector().createComment(s.getUser(), thread, request.getParameter("content"));
+			}
+		} catch (Exception e) {
+			message = e.getMessage();
+			thread = null;
+		}
 	}
 
    if (thread == null) { %>
