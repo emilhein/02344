@@ -33,8 +33,8 @@
 				<tr>
 					<td><h5>created <%= comment.getChanged() %>	</h5></td>
 				</tr>
-			<%if (comment.getUser().getName().equals(s.getUser().getName())) { %>
-			<tr>		
+			<%if (s.getUser() != null && comment.getUser().getIdentifier() == s.getUser().getIdentifier()) { %>
+			<tr>
 		 		<jsp:include page="_ChangeComment.jsp"/>
 			</tr>
 			<% } %>
