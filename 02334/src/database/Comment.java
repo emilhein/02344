@@ -55,7 +55,7 @@ public class Comment {
 		
 		connector.updateComment(content, identifier);
 		
-		this.content = content; 
+		this.content = content;
 		
 	}
 	
