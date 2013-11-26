@@ -53,7 +53,7 @@ public class Comment {
 		
 		Tools.validateCommentContent(content);
 		
-		connector.updateComment(identifier, content);
+		connector.updateComment(content, identifier);
 		
 		this.content = content;
 		
