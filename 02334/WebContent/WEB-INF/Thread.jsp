@@ -28,13 +28,14 @@
 				<tr>
 					<td>Written by: <%= comment.getUser().getName() %></td>
 					<td>content <%= comment.getContent() %></td>
+					<td>Identifier <%= comment.getIdentifier() %></td>
 				</tr>
 				<tr>
 					<td><h5>created <%= comment.getChanged() %>	</h5></td>
 				</tr>
 			<%if (comment.getUser().getName().equals(s.getUser().getName())) { %>
 			<tr>		
-		 		<td><a href="?page=_changecomment">edit comment2</a></td>
+		 		<jsp:include page="_ChangeComment.jsp"/>
 			</tr>
 			<% } %>
 			</table>	 

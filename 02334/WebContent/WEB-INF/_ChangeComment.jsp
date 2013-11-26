@@ -8,20 +8,21 @@
 <%
 	String message = null;
 	database.Comment comment = null;
+	
+	
 	if (request.getMethod().equalsIgnoreCase("post")) {
 		try {
-		
+	
 			comment = a.getConnector().getComment(Integer.parseInt(request.getParameter("comment")));
-			a.getConnector().updateComment(comment.getIdentifier(), request.getParameter("content"));
+			a.getConnector().updateComment(request.getParameter("content"),comment.getIdentifier());
 			
 	} catch (Exception e) {
 		message = e.getMessage();
 		comment = null;
 	}
-	}
+	} %>
 
-   if (comment == null) { %>
-
+  
 
 <br><br>
 	<form method="post">
@@ -30,8 +31,8 @@
 		<table>
 
 			<tr>
-				<td>Your new comment:</td>
-				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>" style="width:300px; height:100px;"></td>
+				<td>change your comment too:</td>
+				<td><input type="text" name="content" value="<%= request.getParameter("content") != null ? request.getParameter("content") : "" %>"></td>
 				
 			</tr>
 			
@@ -46,7 +47,5 @@
 			</tr>
 		</table>
 	</form>
-	<% }else { %>
-	<a href="?page=Thread&thread=<%= comment.getThread().getIdentifier()%>">Go back to the thread</a>
-<%} %>
+	
 	
