@@ -45,6 +45,9 @@
 	border-width:2px;
 	width: auto;
 	overflow: auto;	
+	-moz-border-radius-topright: 50px 7px;
+	border-top-right-radius: 50px 7px;
+	
 }
 
 

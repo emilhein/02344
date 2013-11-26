@@ -43,16 +43,20 @@
 <% } %>
 <br><br>
 <% if (current != null) { %>
+
+ <table>
+ 	<tr>
+ 		<td><h1><b>Title</b></h1></td>
+ 		<td style ="text-align:right"><h1><b>Number of comments</b></h1></td>
+ 	</tr>
+
+ </table>
 	<% for (database.Thread thread : current.getThreads()) { %>
 		<div class="Thread">
 			<table>
 				<tr>
-					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a></td>
+					<td><a href="?page=thread&thread=<%= thread.getIdentifier() %>"><%= thread.getName() %></a> <%=a.getConnector().getCommentCount(thread) %></td>
 				</tr>
-				<tr>
-					<td>Number of comments: <%=a.getConnector().getCommentCount(thread) %></td>
-				</tr>
-				
 			</table>	
 		</div>
 	<% } %>

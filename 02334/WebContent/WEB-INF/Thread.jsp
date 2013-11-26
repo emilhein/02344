@@ -22,6 +22,7 @@
 <% if (current != null) { %>
 	<b><%= current.getName() %></b>
 	<% for (database.Comment comment : current.getComments()) { %>
+		
 		<div class="Comment">
 			<table>
 				<tr>
@@ -31,6 +32,12 @@
 				<tr>
 					<td><h5>created <%= comment.getChanged() %>	</h5></td>
 				</tr>
+			<%if (comment.getUser().getName().equals(s.getUser().getName())) { %>
+			<tr>		
+		 		<td>Written by you. Change here</td>
+		 		<jsp:include page="_ChangeComment.jsp"/>
+			</tr>
+			<% } %>
 			</table>	 
 		</div>
 	<% } %>
