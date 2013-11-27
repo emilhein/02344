@@ -7,7 +7,7 @@
 	Category parent = null;
 	String message = null;
 	try {
-		current q= a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
+		current = a.getConnector().getThread(Integer.parseInt(request.getParameter("thread")));
 		parent = current.getCategory();
 	} catch (Exception e) {
 		message = e.getMessage();
@@ -33,11 +33,11 @@
 					<td><h5>created <%= comment.getChanged() %>	</h5></td>
 				</tr>
 			<%if (s.getUser() != null && comment.getUser().getIdentifier() == s.getUser().getIdentifier()) { %>
-			<tr>
+				<tr>
 		 		<jsp:include page="_ChangeComment.jsp">
 		 			<jsp:param name="comment" value="<%= comment.getIdentifier() %>"/>
-		 		</jsp:include>
-			</tr>
+		 			</jsp:include>
+				</tr>
 			<% } %>
 			</table>	 
 		</div>

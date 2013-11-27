@@ -805,7 +805,9 @@ public class Connector {
 		
 	}
 	
-	protected void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
+	//							<td><input type="submit" value=<%= a.getConnector().updateUser(s.getUser().getIdentifier(),s.getUser().getMail(),s.getUser().getName(), 3) %>></td>
+// hvorfor protected
+	public void updateUser(int identifier, String mail, String name, byte[] password, int type) throws Exception {
 		
 		PreparedStatement statement = null;
 		
