@@ -21,10 +21,10 @@
 <% } %>
 <% if (current != null) { %>
 	<b><%= current.getName() %></b>
+	<div class="Comments">
+	<table>
 	<% for (database.Comment comment : current.getComments()) { %>
 		
-		<div class="Comment">
-			<table>
 				<tr>
 					<td>Written by: <%= comment.getUser().getName() %></td>
 					<td>content <%= comment.getContent() %></td>
@@ -39,9 +39,11 @@
 		 			</jsp:include>
 				</tr>
 			<% } %>
-			</table>	 
-		</div>
+				 
+		
 	<% } %>
+	</table>
+	</div>
 <% } %>
 <% if(!current.getClosed() && s.getUser() != null){ %>
 <jsp:include page="_CreateComment.jsp"/>

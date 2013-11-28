@@ -17,36 +17,37 @@
 	right: 75px;
 	top: 0px;
 }
-.Category {
+.Categories {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 22px;
 	color: #000000;
 	font-weight: normal;
 	border-style:solid;
 	border-width:2px;
-	background-color:#C0C0C0
+	background-color:#C0C0C0;
+	margin: 5px;
 }
-.Thread {
+.Threads {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 22px;
 	color: #000000;
-	font-weight: bold;
+	
 	border-style:groove;
 	border-width:2px;
-	background-color:#3366FF
-
+	background-color:#AAAAFF;
+	margin: 5px;
 }
-.Comment {
+.Comments {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 22px;
 	color: #870231;
-	font-weight: bold;
+	
 	border-style:solid;
 	border-width:2px;
 	width: 600px;
 	overflow: auto;	
 	padding:5px;
-	
+	margin: 5px;
     border-spacing:5px 5px; 
 	-moz-border-radius-topright: 50px 7px;
 	border-top-right-radius: 50px 7px;
@@ -63,4 +64,9 @@ table {
 	border-style:solid;
 	border-width:4px;
 	
+}
+
+td{
+	
+padding: 5px;
 }
