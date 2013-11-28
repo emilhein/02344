@@ -6,7 +6,8 @@ import database.User;
 public class Main {
 
 	public static void main(String[] args) {	
-		
+		System.out.println("Hello world");
+		return; /*
 		Connector connector = null;
 		
 		try {
@@ -52,7 +53,7 @@ public class Main {
 		} finally {
 			connector.close();
 		}
-		
+		*/
 	}
 
 	private static void print(Connector connector) throws Exception {

@@ -9,7 +9,7 @@
 				throw new Exception("Passwords do not match.");
 			}
 			a.getConnector().createUser(request.getParameter("mail"), request.getParameter("name"), request.getParameter("password1"), database.User.USER);
-			s.signin(a, request.getParameter("name"), request.getParameter("password1"));
+			s.signin(request.getParameter("name"), request.getParameter("password1"));
 		} catch (Exception e) {
 			message = e.getMessage();
 		}
