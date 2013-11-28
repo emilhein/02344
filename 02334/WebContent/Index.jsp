@@ -53,13 +53,27 @@
 			</div>
 		<% } else { %>
 			<div id="login">
-				<form method="post">
-					<input type="hidden" name="action" value="signout">
-					<input type="hidden" name="action" value="block">
+				
 					<table>
 						<tr>
+							
 							<td>Welcome <%= s.getUser().getName() %></td>
-							<td><input type="submit" value="Sign Out"></td>
+							<td>
+							<form method="post">
+							<input type="hidden" name="action" value="signout">
+							<input type="submit" value="Sign Out">
+							</form>
+							</td>
+							<%if (s.getUser().getType() == User.USER){ %>
+						
+							<td> 
+							<form method="post">
+							<input type="hidden" name="action" value="block">
+							<input type="submit" value="Block account" style = "color: red">
+							</form>
+							</td>
+						
+						<% } %>					
 						</tr>
 						<tr>
 							<td><a href="?page=home">Home</a></td>
@@ -68,11 +82,8 @@
 							<td><a href="?page=administrateusers">Administrate users</a></td>
 					<% } %>
 						</tr>
-						<tr>
-							<td><input type="submit" value="Block account"></td>
-						</tr>
 					</table>
-				</form>
+				
 			</div>
 		<% } %>
 		<div id="content">
