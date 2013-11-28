@@ -12,6 +12,9 @@
 				s.signout();
 			} else if (request.getParameter("action").equalsIgnoreCase("signin")) {
 				s.signin(request.getParameter("mailOrName"), request.getParameter("password"));
+			} else if (request.getParameter("action").equalsIgnoreCase("block")){
+				s.blockUser();
+				
 			}
 		} catch (Exception e) {
 			message = e.getMessage();
@@ -52,6 +55,7 @@
 			<div id="login">
 				<form method="post">
 					<input type="hidden" name="action" value="signout">
+					<input type="hidden" name="action" value="block">
 					<table>
 						<tr>
 							<td>Welcome <%= s.getUser().getName() %></td>
@@ -60,9 +64,12 @@
 						<tr>
 							<td><a href="?page=home">Home</a></td>
 							<td><a href="?page=category">Categories</a></td>
-							<% if (s.getUser().getType() <= User.MODERATOR) { %>
-								<td><a href="?page=administrateusers">Administrate users</a></td>
-							<% } %>
+					<% if (s.getUser().getType() <= User.MODERATOR) { %>
+							<td><a href="?page=administrateusers">Administrate users</a></td>
+					<% } %>
+						</tr>
+						<tr>
+							<td><input type="submit" value="Block account"></td>
 						</tr>
 					</table>
 				</form>

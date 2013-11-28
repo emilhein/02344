@@ -54,5 +54,15 @@ public class Session {
 		user = -1;
 
 	}
+
+	public void blockUser() throws Exception {
+
+		User user = getUser();
+
+		user.setType(User.BLOCKED);
+		signout();
+	}
+
+	
 	
 }
